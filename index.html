@@ -1,469 +1,201 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="google-site-verification" content="dxi_lAcBma8CaTd7zBkwn7NWnNUb1P_2radDAKyS_I0">
-<title>ناناس کده | بازی آنلاین</title>
-<meta name="description" content="بازی آنلاین ناناس کده؛ ناناس جمع کن، رکورد بزن و با دوستانت رقابت کن.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ناناس کده</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;800&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Tahoma,sans-serif;background:#0E0E1A;color:#fff;line-height:1.9}
-.wrap{max-width:720px;margin:auto;padding:0 16px}
-header{background:#151526;padding:14px;border-bottom:1px solid #333}
-nav{max-width:720px;margin:auto;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:21px;font-weight:bold;color:#FFD93D}
-section{padding:22px 0}
-.card{background:#181828;border:1px solid #33334d;border-radius:18px;padding:20px;margin:12px 0}
-h2{color:#FFD93D;margin-bottom:12px}
-.hero{text-align:center;padding:35px 10px;background:linear-gradient(#2a1a05,#171730)}
-.hero h1{font-size:38px;color:#FFD93D}
-.hero p{color:#ddd;margin:12px}
-.btn{background:#FFD93D;color:#111;border:0;border-radius:12px;padding:11px 20px;font-weight:bold;cursor:pointer;font-size:15px}
-.btn2{background:#333;color:white;border:1px solid #666;border-radius:12px;padding:10px 16px;cursor:pointer}
-input{width:100%;padding:12px;margin:7px 0;border-radius:10px;border:1px solid #555;background:#10101d;color:white;font-size:15px}
-button{margin:5px 3px}
-small,.muted{color:#aaa}
-#gameBox{text-align:center}
-canvas{background:linear-gradient(#1a2b1a,#0e1a0e);border-radius:16px;border:2px solid #6BCB77;touch-action:none;max-width:100%;display:block;margin:12px auto}
-.score{display:flex;justify-content:space-between;font-weight:bold;gap:8px;flex-wrap:wrap}
-table{width:100%;border-collapse:collapse;margin-top:10px}
-td,th{text-align:right;padding:9px;border-bottom:1px solid #333}
-th{color:#6BCB77}
-.status{padding:10px;background:#25253a;border-radius:10px;margin:10px 0;color:#FFD93D}
-footer{text-align:center;color:#888;padding:25px}
-.hidden{display:none}
+:root{
+  --gold:#f5c518;
+  --gold-dark:#c99700;
+  --red:#8e1b1b;
+  --dark:#0e1320;
+  --dark-2:#151c2e;
+  --text:#f4f1e8;
+  --muted:#b9b6a8;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Vazirmatn',sans-serif;
+  background:radial-gradient(circle at 50% 0%, #1b2540 0%, var(--dark) 60%);
+  color:var(--text);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:24px;
+  overflow-x:hidden;
+}
+
+/* ستاره‌های پس‌زمینه */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image:
+    radial-gradient(2px 2px at 20% 30%, #fff8 40%, transparent 41%),
+    radial-gradient(1.5px 1.5px at 70% 15%, #fff6 40%, transparent 41%),
+    radial-gradient(2px 2px at 85% 60%, #fffa 40%, transparent 41%),
+    radial-gradient(1px 1px at 40% 80%, #fff5 40%, transparent 41%),
+    radial-gradient(1.5px 1.5px at 10% 70%, #fff7 40%, transparent 41%);
+  pointer-events:none;
+  z-index:0;
+}
+
+/* هدر / عنوان */
+header{
+  position:relative;
+  z-index:1;
+  text-align:center;
+  margin:20px 0 10px;
+}
+header h1{
+  font-size:clamp(2.2rem, 8vw, 4rem);
+  font-weight:800;
+  background:linear-gradient(180deg, #ffe680 0%, var(--gold) 45%, var(--gold-dark) 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  text-shadow:0 4px 18px rgba(245,197,24,.35);
+  letter-spacing:1px;
+}
+header p{
+  color:var(--muted);
+  margin-top:10px;
+  font-size:clamp(.95rem, 3vw, 1.1rem);
+}
+
+/* دکمه‌ها */
+.actions{
+  position:relative;
+  z-index:1;
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin:28px 0 40px;
+}
+.btn{
+  font-family:inherit;
+  font-size:1rem;
+  font-weight:500;
+  padding:14px 28px;
+  border-radius:14px;
+  border:none;
+  cursor:pointer;
+  transition:transform .15s ease, box-shadow .2s ease, background .2s;
+  text-decoration:none;
+  display:inline-block;
+}
+.btn-primary{
+  background:linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color:#1a1400;
+  box-shadow:0 8px 22px rgba(245,197,24,.35);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(245,197,24,.5)}
+.btn-outline{
+  background:transparent;
+  color:var(--gold);
+  border:2px solid var(--gold);
+}
+.btn-outline:hover{background:rgba(245,197,24,.12);transform:translateY(-2px)}
+
+/* کارت‌ها */
+.grid{
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+  gap:20px;
+  width:100%;
+  max-width:900px;
+  margin-bottom:50px;
+}
+.card{
+  background:linear-gradient(160deg, var(--dark-2), #0b101b);
+  border:1px solid rgba(245,197,24,.18);
+  border-radius:18px;
+  padding:26px 22px;
+  text-align:center;
+  transition:transform .2s ease, border-color .2s, box-shadow .2s;
+}
+.card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(245,197,24,.5);
+  box-shadow:0 14px 34px rgba(0,0,0,.45);
+}
+.card .icon{
+  font-size:2.2rem;
+  margin-bottom:12px;
+  filter:drop-shadow(0 0 10px rgba(245,197,24,.35));
+}
+.card h3{
+  font-size:1.15rem;
+  font-weight:800;
+  color:var(--gold);
+  margin-bottom:8px;
+}
+.card p{
+  font-size:.9rem;
+  color:var(--muted);
+  line-height:1.9;
+}
+
+/* فوتر */
+footer{
+  position:relative;
+  z-index:1;
+  margin-top:auto;
+  padding:18px;
+  font-size:.85rem;
+  color:var(--muted);
+  text-align:center;
+  border-top:1px solid rgba(255,255,255,.07);
+  width:100%;
+  max-width:900px;
+}
+footer span{color:var(--gold)}
 </style>
 </head>
 <body>
 
-<header>
-<nav>
-<div class="logo">🍍 ناناس کده</div>
-<a href="#play" class="btn">بازی کن</a>
-</nav>
-</header>
+  <header>
+    <h1>ناناس کده</h1>
+    <p>به دنیای جادو و سرگرمی خوش اومدی ✨</p>
+  </header>
+
+  <div class="actions">
+    <a href="#" class="btn btn-primary">ورود به کده 🪄</a>
+    <a href="#" class="btn btn-outline">درباره ما</a>
+  </div>
+
+  <main class="grid">
+    <div class="card">
+      <div class="icon">🧙‍♂️</div>
+      <h3>دوره‌های جادوگری</h3>
+      <p>آموزش قدم‌به‌قدم مهارت‌های جادویی برای مبتدی‌ها و حرفه‌ای‌ها.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🦉</div>
+      <h3>پیام‌رسانی با جغد</h3>
+      <p>ارسال سریع و امن پیام‌ها به سراسر دنیای جادوگران.</p>
+    </div>
+    <div class="card">
+      <div class="icon">⚡</div>
+      <h3>طلسم و ورد</h3>
+      <p>مجموعه‌ای از وردهای مفید برای هر روز — از نور تا پرواز.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🏰</div>
+      <h3>انجمن جادوگران</h3>
+      <p>با دیگر جادوگران گفتگو کن، تجربه به اشتراک بذار و تیم بساز.</p>
+    </div>
+  </main>
+
+  <footer>
+    ساخته‌شده با <span>عشق</span> در ناناس کده © ۲۰۲۵
+  </footer>
 
-<div class="hero">
-<h1>بازی ناناس کده 🍍</h1>
-<p>ناناس‌ها را جمع کن، از بمب‌ها فرار کن و رکورد بزن!</p>
-<a href="#play" class="btn">شروع بازی</a>
-</div>
-
-<div class="wrap">
-
-<section id="account">
-<div class="card">
-<h2>👤 حساب کاربری</h2>
-
-<div id="loggedOut">
-<p class="muted">برای ذخیره رکورد آنلاین، وارد حساب شو یا ثبت‌نام کن.</p>
-<input id="username" placeholder="نام بازیکن (برای ثبت‌نام)">
-<input id="email" type="email" placeholder="ایمیل">
-<input id="password" type="password" placeholder="رمز عبور">
-<button class="btn" id="signupBtn">ثبت‌نام</button>
-<button class="btn2" id="loginBtn">ورود</button>
-<button class="btn2" id="resetBtn">فراموشی رمز</button>
-</div>
-
-<div id="loggedIn" class="hidden">
-<p>خوش آمدی، <strong id="playerName"></strong> 🍍</p>
-<p class="muted">حساب تو به بازی متصل است.</p>
-<button class="btn2" id="logoutBtn">خروج از حساب</button>
-</div>
-
-<div id="authStatus" class="status">وضعیت: آماده</div>
-</div>
-</section>
-
-<section id="play">
-<div class="card" id="gameBox">
-<h2>🎮 بازی آنلاین</h2>
-<p class="muted">با انگشت یا موس سبد را حرکت بده.</p>
-<div class="score">
-<div>امتیاز: <span id="sc">۰</span></div>
-<div>❤️ جان: <span id="life">۳</span></div>
-<div>🏆 رکورد: <span id="best">۰</span></div>
-</div>
-<canvas id="game" width="340" height="440"></canvas>
-<button class="btn" id="startBtn">شروع بازی</button>
-</div>
-</section>
-
-<section>
-<div class="card">
-<h2>🏆 جدول رکوردهای آنلاین</h2>
-<table>
-<thead><tr><th>رتبه</th><th>بازیکن</th><th>امتیاز</th></tr></thead>
-<tbody id="leaderboard">
-<tr><td colspan="3">در حال دریافت اطلاعات...</td></tr>
-</tbody>
-</table>
-<button class="btn2" id="refreshBoard">به‌روزرسانی جدول</button>
-</div>
-</section>
-
-<section>
-<div class="card">
-<h2>📖 آموزش بازی</h2>
-<p>۱. دکمه شروع را بزن.</p>
-<p>۲. سبد را با انگشت یا موس حرکت بده.</p>
-<p>۳. هر ناناس ۱۰ امتیاز دارد.</p>
-<p>۴. مراقب بمب‌ها باش؛ سه جان داری!</p>
-</div>
-</section>
-
-</div>
-
-<footer>© ۱۴۰۵ ناناس کده 🍍</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const SUPABASE_URL = 'https://hnmelfroqpmhfjwnrfmn.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_Ia2VDkgSJGIDp09eeN8n4A_fOfV-Jfy';
-
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-const statusBox = document.getElementById('authStatus');
-const loggedOut = document.getElementById('loggedOut');
-const loggedIn = document.getElementById('loggedIn');
-const playerName = document.getElementById('playerName');
-
-let currentUser = null;
-
-function say(message){
-  statusBox.textContent = message;
-}
-
-function fa(n){
-  return Number(n || 0).toLocaleString('fa-IR');
-}
-
-async function ensureProfile(user){
-  let name = user.user_metadata?.username || user.email?.split('@')[0] || 'بازیکن';
-  name = name.trim().slice(0,24);
-
-  let result = await sb.from('profiles').upsert(
-    {id:user.id, username:name},
-    {onConflict:'id', ignoreDuplicates:true}
-  );
-
-  if(result.error){
-    const fallback = 'بازیکن_' + user.id.slice(0,6);
-    result = await sb.from('profiles').upsert(
-      {id:user.id, username:fallback},
-      {onConflict:'id', ignoreDuplicates:true}
-    );
-  }
-
-  const profile = await sb.from('profiles')
-    .select('username')
-    .eq('id',user.id)
-    .maybeSingle();
-
-  return profile.data?.username || name;
-}
-
-async function updateAuthUI(user){
-  currentUser = user || null;
-
-  if(user){
-    loggedOut.classList.add('hidden');
-    loggedIn.classList.remove('hidden');
-
-    try{
-      const name = await ensureProfile(user);
-      playerName.textContent = name;
-      say('وارد حساب خود شده‌ای.');
-    }catch(error){
-      playerName.textContent = user.email || 'بازیکن';
-      say('وارد شدی؛ اما دریافت پروفایل با مشکل روبه‌رو شد.');
-    }
-
-    loadBestScore();
-  }else{
-    loggedIn.classList.add('hidden');
-    loggedOut.classList.remove('hidden');
-    say('برای ذخیره آنلاین رکورد وارد حساب شو.');
-  }
-
-  loadLeaderboard();
-}
-
-document.getElementById('signupBtn').onclick = async function(){
-  const username = document.getElementById('username').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value;
-
-  if(!username || !email || !password){
-    say('نام بازیکن، ایمیل و رمز عبور را وارد کن.');
-    return;
-  }
-
-  if(password.length < 6){
-    say('رمز عبور باید حداقل ۶ کاراکتر باشد.');
-    return;
-  }
-
-  say('در حال ساخت حساب...');
-  const {data,error} = await sb.auth.signUp({
-    email,
-    password,
-    options:{data:{username}}
-  });
-
-  if(error){
-    say('خطا در ثبت‌نام: ' + error.message);
-    return;
-  }
-
-  if(data.session){
-    await updateAuthUI(data.user);
-    say('حساب ساخته شد. خوش آمدی!');
-  }else{
-    say('حساب ساخته شد. ایمیلت را برای تأیید بررسی کن، سپس وارد شو.');
-  }
-};
-
-document.getElementById('loginBtn').onclick = async function(){
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value;
-
-  if(!email || !password){
-    say('ایمیل و رمز عبور را وارد کن.');
-    return;
-  }
-
-  say('در حال ورود...');
-  const {data,error} = await sb.auth.signInWithPassword({email,password});
-
-  if(error){
-    say('خطا در ورود: ' + error.message);
-    return;
-  }
-
-  await updateAuthUI(data.user);
-};
-
-document.getElementById('logoutBtn').onclick = async function(){
-  const {error} = await sb.auth.signOut();
-  if(error){
-    say('خروج انجام نشد: ' + error.message);
-    return;
-  }
-  await updateAuthUI(null);
-};
-
-document.getElementById('resetBtn').onclick = async function(){
-  const email = document.getElementById('email').value.trim();
-  if(!email){
-    say('اول ایمیلت را وارد کن.');
-    return;
-  }
-
-  const {error} = await sb.auth.resetPasswordForEmail(email);
-  say(error ? 'خطا: ' + error.message : 'اگر این ایمیل ثبت شده باشد، لینک بازیابی برایش ارسال می‌شود.');
-};
-
-sb.auth.onAuthStateChange((event,session)=>{
-  updateAuthUI(session?.user || null);
-});
-
-async function loadLeaderboard(){
-  const body = document.getElementById('leaderboard');
-
-  const {data:scores,error} = await sb
-    .from('scores')
-    .select('user_id,best_score')
-    .order('best_score',{ascending:false})
-    .limit(10);
-
-  if(error){
-    body.innerHTML = '<tr><td colspan="3">دریافت جدول با مشکل روبه‌رو شد.</td></tr>';
-    return;
-  }
-
-  if(!scores || scores.length===0){
-    body.innerHTML = '<tr><td colspan="3">هنوز رکوردی ثبت نشده است.</td></tr>';
-    return;
-  }
-
-  const ids = scores.map(item=>item.user_id);
-  const {data:profiles} = await sb
-    .from('profiles')
-    .select('id,username')
-    .in('id',ids);
-
-  const names = {};
-  (profiles || []).forEach(p=>names[p.id]=p.username);
-
-  body.innerHTML = '';
-  scores.forEach((item,index)=>{
-    const tr = document.createElement('tr');
-    const values = [
-      fa(index+1),
-      names[item.user_id] || 'بازیکن',
-      fa(item.best_score)
-    ];
-
-    values.forEach(value=>{
-      const td = document.createElement('td');
-      td.textContent = value;
-      tr.appendChild(td);
-    });
-
-    body.appendChild(tr);
-  });
-}
-
-document.getElementById('refreshBoard').onclick = loadLeaderboard;
-
-let c = document.getElementById('game');
-let ctx = c.getContext('2d');
-let score = 0, life = 3, running = false, bx = 140, items = [];
-let best = Number(localStorage.getItem('nanas_best') || 0);
-
-const scEl = document.getElementById('sc');
-const lifeEl = document.getElementById('life');
-const bestEl = document.getElementById('best');
-
-bestEl.textContent = fa(best);
-
-async function loadBestScore(){
-  if(!currentUser) return;
-
-  const {data,error} = await sb.from('scores')
-    .select('best_score')
-    .eq('user_id',currentUser.id)
-    .maybeSingle();
-
-  if(!error && data && data.best_score > best){
-    best = data.best_score;
-    localStorage.setItem('nanas_best',String(best));
-    bestEl.textContent = fa(best);
-  }
-}
-
-async function saveOnlineScore(value){
-  if(!currentUser){
-    say('برای ذخیره آنلاین رکورد، ابتدا وارد حساب شو.');
-    return;
-  }
-
-  const {data:old} = await sb.from('scores')
-    .select('best_score')
-    .eq('user_id',currentUser.id)
-    .maybeSingle();
-
-  if(old && old.best_score >= value){
-    say('رکورد آنلاین قبلی‌ات حفظ شد.');
-    return;
-  }
-
-  const {error} = await sb.from('scores').upsert({
-    user_id:currentUser.id,
-    best_score:value,
-    updated_at:new Date().toISOString()
-  },{onConflict:'user_id'});
-
-  if(error){
-    say('رکورد محلی ذخیره شد؛ ذخیره آنلاین با مشکل روبه‌رو شد.');
-  }else{
-    say('رکورد جدیدت آنلاین ذخیره شد! 🏆');
-    loadLeaderboard();
-  }
-}
-
-function spawn(){
-  const ch = Math.random()<0.75 ? '🍍' : '💣';
-  items.push({
-    x:20+Math.random()*300,
-    y:-30,
-    s:2+Math.random()*2+score/200,
-    c:ch
-  });
-}
-
-c.addEventListener('touchmove',function(e){
-  const rect=c.getBoundingClientRect();
-  bx=(e.touches[0].clientX-rect.left)*(340/rect.width)-35;
-  e.preventDefault();
-},{passive:false});
-
-c.addEventListener('mousemove',function(e){
-  const rect=c.getBoundingClientRect();
-  bx=(e.clientX-rect.left)*(340/rect.width)-35;
-});
-
-document.getElementById('startBtn').onclick=function(){
-  score=0;
-  life=3;
-  items=[];
-  running=true;
-  scEl.textContent=fa(score);
-  lifeEl.textContent=fa(life);
-  this.textContent='شروع دوباره';
-  loop();
-};
-
-function loop(){
-  if(!running) return;
-
-  ctx.clearRect(0,0,340,440);
-
-  if(Math.random()<0.08) spawn();
-
-  ctx.font='40px serif';
-  ctx.textAlign='center';
-  ctx.fillText('🧺',Math.max(35,Math.min(305,bx+35)),420);
-
-  for(let i=items.length-1;i>=0;i--){
-    const it=items[i];
-    it.y+=it.s;
-
-    ctx.font='30px serif';
-    ctx.fillText(it.c,it.x,it.y);
-
-    if(it.y>390 && it.y<430 && it.x>bx-10 && it.x<bx+80){
-      if(it.c==='🍍'){
-        score+=10;
-      }else{
-        life--;
-        lifeEl.textContent=fa(life);
-
-        if(life<=0){
-          running=false;
-
-          if(score>best){
-            best=score;
-            localStorage.setItem('nanas_best',String(best));
-            bestEl.textContent=fa(best);
-          }
-
-          saveOnlineScore(score);
-          alert('بازی تمام شد! امتیاز: '+fa(score));
-        }
-      }
-
-      items.splice(i,1);
-      continue;
-    }
-
-    if(it.y>460) items.splice(i,1);
-  }
-
-  scEl.textContent=fa(score);
-
-  if(running) requestAnimationFrame(loop);
-}
-
-ctx.fillStyle='#fff';
-ctx.font='18px Tahoma';
-ctx.textAlign='center';
-ctx.fillText('دکمه شروع را بزن 🍍',170,220);
-
-updateAuthUI(null);
-</script>
 </body>
 </html>
