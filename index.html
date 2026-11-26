@@ -1,111 +1,1233 @@
-
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ناناس کده 🍍</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-font-family:Tahoma,sans-serif;
-background:linear-gradient(135deg,#090d1c,#192744,#090d1c);
-color:white;
-min-height:100vh;
-text-align:center;
-padding:30px 16px;
-}
-header{padding:65px 10px 35px}
-h1{
-font-size:clamp(40px,8vw,70px);
-color:#ffd84d;
-text-shadow:0 0 25px #f5bd3d;
-}
-header p{color:#ddd;margin-top:20px;font-size:18px}
-.buttons{margin:25px auto 45px}
-button{
-padding:14px 25px;
-margin:7px;
-border:0;
-border-radius:12px;
-background:#f5c518;
-color:#171321;
-font-size:16px;
-font-weight:bold;
-cursor:pointer;
-}
-button:hover{background:#ffe47a}
-.grid{
-max-width:950px;
-margin:auto;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-gap:20px;
-}
-.card{
-padding:30px 20px;
-background:#172139;
-border:1px solid #b68b24;
-border-radius:20px;
-transition:.3s;
-}
-.card:hover{transform:translateY(-7px)}
-.icon{font-size:45px;margin-bottom:15px}
-h2{font-size:20px;color:#ffd84d;margin-bottom:12px}
-.card p{color:#d2d4dc;line-height:2}
-footer{margin:65px auto 10px;color:#aaa}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍍 ناناس کده</title>
+    <!-- فونت فارسی -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+    <!-- Supabase JS v2 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --navy: #0b1026;
+            --navy-light: #151b3d;
+            --gold: #d4af37;
+            --gold-light: #f0d77b;
+            --purple: #6b21a8;
+            --purple-light: #a855f7;
+            --white: #f8f7ff;
+            --gray: #a0a0b0;
+            --success: #22c55e;
+            --error: #ef4444;
+            --radius: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: var(--navy);
+            color: var(--white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ستاره‌های جادویی پس‌زمینه */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                radial-gradient(2px 2px at 20% 30%, rgba(212,175,55,.7), transparent),
+                radial-gradient(2px 2px at 80% 20%, rgba(168,85,247,.7), transparent),
+                radial-gradient(1.5px 1.5px at 50% 70%, rgba(212,175,55,.5), transparent),
+                radial-gradient(1.5px 1.5px at 10% 80%, rgba(168,85,247,.5), transparent),
+                radial-gradient(2px 2px at 90% 60%, rgba(212,175,55,.6), transparent),
+                radial-gradient(1.5px 1.5px at 35% 15%, rgba(255,255,255,.4), transparent),
+                radial-gradient(1.5px 1.5px at 65% 45%, rgba(255,255,255,.3), transparent);
+            background-size: 200% 200%;
+            animation: twinkle 8s ease-in-out infinite alternate;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: .5; }
+            100% { opacity: 1; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 460px;
+            padding: 20px;
+            z-index: 1;
+            margin: auto;
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--purple-light) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+            filter: drop-shadow(0 2px 8px rgba(212,175,55,.25));
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 2px 8px rgba(212,175,55,.25)); }
+            to   { filter: drop-shadow(0 2px 18px rgba(168,85,247,.55)); }
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--gray);
+            font-size: .9rem;
+            margin-bottom: 28px;
+        }
+
+        /* کارت */
+        .card {
+            background: rgba(21, 27, 61, .85);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(212, 175, 55, .25);
+            border-radius: var(--radius);
+            padding: 28px 24px;
+            box-shadow: 0 8px 32px rgba(0,0,0,.45), 0 0 60px rgba(107,33,168,.15);
+            margin-bottom: 18px;
+        }
+
+        .card h2 {
+            text-align: center;
+            font-size: 1.25rem;
+            color: var(--gold-light);
+            margin-bottom: 22px;
+            font-weight: 700;
+        }
+
+        /* فرم‌ها */
+        .field {
+            margin-bottom: 16px;
+        }
+
+        .field label {
+            display: block;
+            font-size: .85rem;
+            color: var(--gray);
+            margin-bottom: 6px;
+        }
+
+        .field input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1.5px solid rgba(168, 85, 247, .35);
+            background: rgba(11, 16, 38, .7);
+            color: var(--white);
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: .95rem;
+            outline: none;
+            transition: border .25s, box-shadow .25s;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .field input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, .18);
+        }
+
+        .field input::placeholder {
+            color: #555a75;
+            font-size: .85rem;
+        }
+
+        /* دکمه‌ها */
+        .btn {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform .15s, box-shadow .25s, opacity .25s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:active { transform: scale(.97); }
+        .btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-light) 100%);
+            color: #fff;
+            box-shadow: 0 4px 18px rgba(168, 85, 247, .35);
+        }
+        .btn-primary:hover:not(:disabled) {
+            box-shadow: 0 6px 26px rgba(168, 85, 247, .55);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #b8902a 0%, var(--gold) 50%, var(--gold-light) 100%);
+            color: #1a1400;
+            box-shadow: 0 4px 18px rgba(212, 175, 55, .35);
+        }
+        .btn-gold:hover:not(:disabled) {
+            box-shadow: 0 6px 26px rgba(212, 175, 55, .55);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid rgba(168, 85, 247, .5);
+            color: var(--purple-light);
+        }
+        .btn-outline:hover:not(:disabled) {
+            background: rgba(168, 85, 247, .12);
+        }
+
+        .btn-danger {
+            background: transparent;
+            border: 1.5px solid rgba(239, 68, 68, .5);
+            color: #f87171;
+        }
+        .btn-danger:hover:not(:disabled) {
+            background: rgba(239, 68, 68, .12);
+        }
+
+        .btn-link {
+            background: none;
+            border: none;
+            color: var(--gold-light);
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: .85rem;
+            cursor: pointer;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            padding: 4px;
+        }
+        .btn-link:hover { color: var(--gold); }
+
+        /* جداکننده */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 18px 0;
+            color: var(--gray);
+            font-size: .8rem;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to left, transparent, rgba(212,175,55,.35), transparent);
+        }
+
+        /* پیام‌ها */
+        .alert {
+            padding: 11px 14px;
+            border-radius: 10px;
+            font-size: .88rem;
+            line-height: 1.7;
+            margin-bottom: 16px;
+            display: none;
+            animation: slideIn .3s ease;
+        }
+        .alert.show { display: block; }
+
+        .alert-success {
+            background: rgba(34, 197, 94, .12);
+            border: 1px solid rgba(34, 197, 94, .45);
+            color: #86efac;
+        }
+        .alert-error {
+            background: rgba(239, 68, 68, .12);
+            border: 1px solid rgba(239, 68, 68, .45);
+            color: #fca5a5;
+        }
+        .alert-info {
+            background: rgba(168, 85, 247, .12);
+            border: 1px solid rgba(168, 85, 247, .45);
+            color: #d8b4fe;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-6px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* لودینگ */
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin .7s linear infinite;
+            vertical-align: middle;
+            margin-left: 6px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* پنل کاربری */
+        .avatar {
+            width: 82px;
+            height: 82px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--purple) 0%, var(--gold) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            color: #fff;
+            margin: 0 auto 14px;
+            box-shadow: 0 0 30px rgba(168, 85, 247, .45);
+            border: 2px solid rgba(212, 175, 55, .5);
+        }
+
+        .user-name {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--gold-light);
+            margin-bottom: 4px;
+            word-break: break-word;
+        }
+
+        .user-email {
+            text-align: center;
+            font-size: .85rem;
+            color: var(--gray);
+            direction: ltr;
+            word-break: break-all;
+            margin-bottom: 20px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed rgba(168, 85, 247, .2);
+            font-size: .88rem;
+        }
+        .info-row:last-child { border-bottom: none; }
+        .info-row .label { color: var(--gray); }
+        .info-row .value { color: var(--white); font-weight: 600; }
+
+        /* تب‌ها */
+        .tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 20px;
+            background: rgba(11, 16, 38, .6);
+            padding: 5px;
+            border-radius: 12px;
+            border: 1px solid rgba(168, 85, 247, .2);
+        }
+        .tab {
+            flex: 1;
+            padding: 9px;
+            border: none;
+            background: transparent;
+            color: var(--gray);
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: .9rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all .25s;
+        }
+        .tab.active {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-light) 100%);
+            color: #fff;
+            box-shadow: 0 2px 12px rgba(168, 85, 247, .4);
+        }
+
+        .hidden { display: none !important; }
+
+        .footer-note {
+            text-align: center;
+            font-size: .75rem;
+            color: #555a75;
+            margin-top: 8px;
+            line-height: 1.8;
+        }
+
+        .footer-note a {
+            color: var(--purple-light);
+            text-decoration: none;
+        }
+
+        /* واکنش‌گرا */
+        @media (max-width: 480px) {
+            .logo { font-size: 1.8rem; }
+            .container { padding: 14px; }
+            .card { padding: 22px 18px; }
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <!-- عنوان اصلی -->
+        <h1 class="logo">🍍 ناناس کده</h1>
+        <p class="subtitle">دنیای جادویی حساب کاربری شما</p>
 
-<header>
-<h1>🍍 ناناس کده</h1>
-<p>به دنیای جادو، خیال و سرگرمی خوش اومدی ✨</p>
-</header>
+        <!-- پیام سراسری -->
+        <div id="globalAlert" class="alert"></div>
 
-<div class="buttons">
-<button onclick="welcome()">ورود به کده 🪄</button>
-<button onclick="about()">درباره ما</button>
-</div>
+        <!-- ============ نمای احراز هویت ============ -->
+        <div id="authView">
+            <!-- تب‌ها -->
+            <div class="tabs" id="authTabs">
+                <button class="tab active" data-tab="login">ورود</button>
+                <button class="tab" data-tab="signup">ثبت‌نام</button>
+            </div>
 
-<main class="grid">
-<div class="card">
-<div class="icon">🧙</div>
-<h2>دوره‌های جادوگری</h2>
-<p>دنیایی از آموزش‌ها و سرگرمی‌های جادویی منتظر توئه!</p>
-</div>
+            <!-- فرم ورود -->
+            <div class="card" id="loginCard">
+                <h2>✨ ورود به حساب</h2>
+                <div id="loginAlert" class="alert"></div>
+                <form id="loginForm" novalidate>
+                    <div class="field">
+                        <label for="loginEmail">ایمیل</label>
+                        <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email" required>
+                    </div>
+                    <div class="field">
+                        <label for="loginPassword">رمز عبور</label>
+                        <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="loginBtn">ورود</button>
+                </form>
+                <div style="text-align:center; margin-top:14px;">
+                    <button type="button" class="btn-link" id="showForgotBtn">رمز عبور را فراموش کرده‌اید؟</button>
+                </div>
+            </div>
 
-<div class="card">
-<div class="icon">🦉</div>
-<h2>پیام‌رسانی با جغد</h2>
-<p>پیام‌های جادویی خودت رو برای دوستانت آماده کن!</p>
-</div>
+            <!-- فرم ثبت‌نام -->
+            <div class="card hidden" id="signupCard">
+                <h2>🌟 ساخت حساب جدید</h2>
+                <div id="signupAlert" class="alert"></div>
+                <form id="signupForm" novalidate>
+                    <div class="field">
+                        <label for="signupName">نام نمایشی</label>
+                        <input type="text" id="signupName" placeholder="مثلاً: ناناس‌باز" autocomplete="nickname" required>
+                    </div>
+                    <div class="field">
+                        <label for="signupEmail">ایمیل</label>
+                        <input type="email" id="signupEmail" placeholder="you@example.com" autocomplete="email" required>
+                    </div>
+                    <div class="field">
+                        <label for="signupPassword">رمز عبور (حداقل ۶ کاراکتر)</label>
+                        <input type="password" id="signupPassword" placeholder="••••••••" autocomplete="new-password" minlength="6" required>
+                    </div>
+                    <div class="field">
+                        <label for="signupPassword2">تکرار رمز عبور</label>
+                        <input type="password" id="signupPassword2" placeholder="••••••••" autocomplete="new-password" minlength="6" required>
+                    </div>
+                    <button type="submit" class="btn btn-gold" id="signupBtn">ثبت‌نام</button>
+                </form>
+            </div>
 
-<div class="card">
-<div class="icon">⚡</div>
-<h2>طلسم و ورد</h2>
-<p>با وردهای شگفت‌انگیز وارد دنیای خیال شو!</p>
-</div>
+            <!-- فرم فراموشی رمز -->
+            <div class="card hidden" id="forgotCard">
+                <h2>🔑 بازیابی رمز عبور</h2>
+                <div id="forgotAlert" class="alert"></div>
+                <form id="forgotForm" novalidate>
+                    <div class="field">
+                        <label for="forgotEmail">ایمیل حساب</label>
+                        <input type="email" id="forgotEmail" placeholder="you@example.com" autocomplete="email" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="forgotBtn">ارسال لینک بازیابی</button>
+                </form>
+                <div style="text-align:center; margin-top:14px;">
+                    <button type="button" class="btn-link" id="backToLoginBtn">بازگشت به ورود</button>
+                </div>
+            </div>
 
-<div class="card">
-<div class="icon">🏰</div>
-<h2>انجمن جادوگران</h2>
-<p>اینجا جای دوستداران جادو و ماجراجوییه!</p>
-</div>
-</main>
+            <!-- فرم تعیین رمز جدید (بعد از کلیک روی لینک بازیابی) -->
+            <div class="card hidden" id="resetCard">
+                <h2>🪄 تعیین رمز جدید</h2>
+                <div id="resetAlert" class="alert"></div>
+                <form id="resetForm" novalidate>
+                    <div class="field">
+                        <label for="resetPassword">رمز عبور جدید (حداقل ۶ کاراکتر)</label>
+                        <input type="password" id="resetPassword" placeholder="••••••••" autocomplete="new-password" minlength="6" required>
+                    </div>
+                    <div class="field">
+                        <label for="resetPassword2">تکرار رمز جدید</label>
+                        <input type="password" id="resetPassword2" placeholder="••••••••" autocomplete="new-password" minlength="6" required>
+                    </div>
+                    <button type="submit" class="btn btn-gold" id="resetBtn">ذخیره رمز جدید</button>
+                </form>
+                <div style="text-align:center; margin-top:14px;">
+                    <button type="button" class="btn-link" id="cancelResetBtn">انصراف و بازگشت به ورود</button>
+                </div>
+            </div>
+        </div>
 
-<footer>
-ساخته شده با ❤️ در ناناس کده © ۲۰۲۶
-</footer>
+        <!-- ============ پنل کاربری ============ -->
+        <div id="panelView" class="hidden">
+            <div class="card">
+                <div class="avatar" id="avatarInitial">N</div>
+                <div class="user-name" id="panelName">—</div>
+                <div class="user-email" id="panelEmail">—</div>
 
-<script>
-function welcome(){
-alert("به ناناس کده خوش اومدی! 🍍✨");
-}
-function about(){
-alert("ناناس کده، دنیایی برای جادو و سرگرمیه! ❤️");
-}
-</script>
+                <div class="info-row">
+                    <span class="label">تاریخ عضویت</span>
+                    <span class="value" id="panelJoined">—</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">شناسه کاربر</span>
+                    <span class="value" id="panelId" style="direction:ltr; font-size:.75rem;">—</span>
+                </div>
+            </div>
 
+            <div class="card">
+                <h2>✏️ ویرایش نام نمایشی</h2>
+                <div id="profileAlert" class="alert"></div>
+                <form id="profileForm" novalidate>
+                    <div class="field">
+                        <label for="profileName">نام نمایشی جدید</label>
+                        <input type="text" id="profileName" placeholder="نام جدید..." required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="profileBtn">ذخیره تغییرات</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2>🔒 تغییر رمز عبور</h2>
+                <div id="changePassAlert" class="alert"></div>
+                <form id="changePassForm" novalidate>
+                    <div class="field">
+                        <label for="newPass">رمز عبور جدید</label>
+                        <input type="password" id="newPass" placeholder="••••••••" autocomplete="new-password" minlength="6" required>
+                    </div>
+                    <div class="field">
+                        <label for="newPass2">تکرار رمز جدید</label>
+                        <input type="password" id="newPass2" placeholder="••••••••" autocomplete="new-password" minlength="6" required>
+                    </div>
+                    <button type="submit" class="btn btn-gold" id="changePassBtn">تغییر رمز</button>
+                </form>
+            </div>
+
+            <button class="btn btn-danger" id="logoutBtn" style="margin-bottom:20px;">🚪 خروج از حساب</button>
+        </div>
+
+        <p class="footer-note">
+            ساخته‌شده با 💜 در <strong>ناناس کده</strong><br>
+            احراز هویت امن توسط <a href="https://supabase.com" target="_blank" rel="noopener">Supabase</a>
+        </p>
+    </div>
+
+    <!-- ============ اسکریپت ============ -->
+    <script>
+    (function () {
+        'use strict';
+
+        // ============================================================
+        // ۱) پیکربندی Supabase
+        //    آدرس پروژه داده شده است. کلید عمومی (Publishable/anon)
+        //    باید توسط شما در متغیر زیر وارد شود.
+        //    ⚠️ هیچ کلید خصوصی/secret را اینجا قرار ندهید.
+        // ============================================================
+        const SUPABASE_URL = 'https://hnmelfroqpmhfjwnrfmn.supabase.co';
+        const SUPABASE_ANON_KEY = ''; // ⬅️ کلید عمومی Publishable را اینجا وارد کنید
+
+        // آدرس بازگشت برای ایمیل‌ها (سازگار با GitHub Pages)
+        const REDIRECT_URL = window.location.origin + window.location.pathname;
+
+        // ============================================================
+        // ۲) بررسی پیکربندی
+        // ============================================================
+        const configAlert = document.getElementById('globalAlert');
+
+        function showGlobal(type, msg) {
+            configAlert.className = 'alert show alert-' + type;
+            configAlert.textContent = msg;
+            if (type !== 'error') {
+                clearTimeout(showGlobal._t);
+                showGlobal._t = setTimeout(() => {
+                    configAlert.classList.remove('show');
+                }, 6000);
+            }
+        }
+
+        if (!SUPABASE_ANON_KEY || SUPABASE_ANON_KEY.trim() === '') {
+            showGlobal('error', '⚠️ کلید عمومی Supabase وارد نشده است. لطفاً مقدار SUPABASE_ANON_KEY را در کد تنظیم کنید.');
+        }
+
+        // ============================================================
+        // ۳) راه‌اندازی کلاینت Supabase
+        // ============================================================
+        let supabase = null;
+        let supabaseReady = false;
+
+        if (SUPABASE_ANON_KEY && SUPABASE_ANON_KEY.trim() !== '' && window.supabase) {
+            try {
+                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+                    auth: {
+                        persistSession: true,
+                        autoRefreshToken: true,
+                        detectSessionInUrl: true,
+                        flowType: 'pkce'
+                    }
+                });
+                supabaseReady = true;
+            } catch (e) {
+                console.error('Supabase init error:', e);
+                showGlobal('error', 'خطا در راه‌اندازی Supabase: ' + e.message);
+            }
+        } else if (!window.supabase) {
+            showGlobal('error', '⚠️ کتابخانه Supabase بارگذاری نشد. اتصال اینترنت را بررسی کنید.');
+        }
+
+        // ============================================================
+        // ۴) ابزارهای کمکی
+        // ============================================================
+        function $(id) { return document.getElementById(id); }
+
+        function setBusy(btn, busy, defaultText) {
+            if (!btn) return;
+            if (busy) {
+                btn.dataset.original = btn.innerHTML;
+                btn.disabled = true;
+                btn.innerHTML = (defaultText || 'لطفاً صبر کنید...') + ' <span class="spinner"></span>';
+            } else {
+                btn.disabled = false;
+                if (btn.dataset.original) btn.innerHTML = btn.dataset.original;
+            }
+        }
+
+        function showAlert(el, type, msg) {
+            if (!el) return;
+            el.className = 'alert show alert-' + type;
+            el.textContent = msg;
+            el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function hideAlert(el) {
+            if (!el) return;
+            el.className = 'alert';
+            el.textContent = '';
+        }
+
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function formatDate(iso) {
+            if (!iso) return '—';
+            try {
+                const d = new Date(iso);
+                if (isNaN(d.getTime())) return '—';
+                return d.toLocaleDateString('fa-IR', {
+                    year: 'numeric', month: 'long', day: 'numeric'
+                });
+            } catch { return '—'; }
+        }
+
+        // ============================================================
+        // ۵) مدیریت نمایش نماها
+        // ============================================================
+        const authView = $('authView');
+        const panelView = $('panelView');
+        const loginCard = $('loginCard');
+        const signupCard = $('signupCard');
+        const forgotCard = $('forgotCard');
+        const resetCard = $('resetCard');
+        const authTabs = $('authTabs');
+
+        // پرچم: آیا کاربر در حال حاضر در حالت بازیابی رمز است؟
+        let isRecoveryMode = false;
+
+        function hideAllAuthCards() {
+            [loginCard, signupCard, forgotCard, resetCard].forEach(c => c.classList.add('hidden'));
+        }
+
+        function showAuthTab(name) {
+            // اگر در حالت بازیابی هستیم، تب‌ها را نمایش نده و فرم بازیابی را نگه دار
+            if (isRecoveryMode) return;
+
+            hideAllAuthCards();
+            authTabs.classList.remove('hidden');
+            document.querySelectorAll('.tab').forEach(t => {
+                t.classList.toggle('active', t.dataset.tab === name);
+            });
+            if (name === 'login') loginCard.classList.remove('hidden');
+            else if (name === 'signup') signupCard.classList.remove('hidden');
+        }
+
+        function showForgot() {
+            hideAllAuthCards();
+            authTabs.classList.add('hidden');
+            forgotCard.classList.remove('hidden');
+            hideAlert($('forgotAlert'));
+        }
+
+        function showReset() {
+            isRecoveryMode = true;
+            hideAllAuthCards();
+            authTabs.classList.add('hidden');
+            resetCard.classList.remove('hidden');
+            hideAlert($('resetAlert'));
+            // پاک‌سازی فیلدها
+            $('resetPassword').value = '';
+            $('resetPassword2').value = '';
+            showAlert($('resetAlert'), 'info', '🪄 لطفاً رمز عبور جدید خود را وارد کنید.');
+        }
+
+        function exitRecoveryMode() {
+            isRecoveryMode = false;
+            // پاک‌سازی هش/کوئری URL تا لینک بازیابی دوباره اعمال نشود
+            try {
+                if (window.history && window.history.replaceState) {
+                    const cleanUrl = window.location.origin + window.location.pathname;
+                    window.history.replaceState({}, document.title, cleanUrl);
+                }
+            } catch (e) { /* بی‌اهمیت */ }
+        }
+
+        function showPanel() {
+            authView.classList.add('hidden');
+            panelView.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showAuth() {
+            panelView.classList.add('hidden');
+            authView.classList.remove('hidden');
+            if (!isRecoveryMode) {
+                showAuthTab('login');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ============================================================
+        // ۶) تب‌ها و دکمه‌های ناوبری
+        // ============================================================
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                showAuthTab(tab.dataset.tab);
+                hideAlert($('loginAlert'));
+                hideAlert($('signupAlert'));
+            });
+        });
+
+        $('showForgotBtn').addEventListener('click', showForgot);
+        $('backToLoginBtn').addEventListener('click', () => {
+            showAuthTab('login');
+            hideAlert($('forgotAlert'));
+        });
+
+        // انصراف از حالت بازیابی رمز
+        $('cancelResetBtn').addEventListener('click', async () => {
+            exitRecoveryMode();
+            // خروج از نشست بازیابی (تا کاربر مجبور شود دوباره وارد شود)
+            if (supabaseReady) {
+                try { await supabase.auth.signOut(); } catch (e) { /* بی‌اهمیت */ }
+            }
+            showAuthTab('login');
+            showAlert($('loginAlert'), 'info', 'از حالت بازیابی رمز خارج شدید. لطفاً وارد شوید.');
+        });
+
+        // ============================================================
+        // ۷) ثبت‌نام
+        // ============================================================
+        $('signupForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const alertEl = $('signupAlert');
+            hideAlert(alertEl);
+
+            if (!supabaseReady) {
+                showAlert(alertEl, 'error', 'اتصال به Supabase برقرار نیست. لطفاً کلید عمومی را تنظیم کنید.');
+                return;
+            }
+
+            const name = $('signupName').value.trim();
+            const email = $('signupEmail').value.trim();
+            const pass = $('signupPassword').value;
+            const pass2 = $('signupPassword2').value;
+
+            if (name.length < 2) {
+                showAlert(alertEl, 'error', 'نام نمایشی باید حداقل ۲ کاراکتر باشد.');
+                return;
+            }
+            if (!isValidEmail(email)) {
+                showAlert(alertEl, 'error', 'آدرس ایمیل معتبر نیست.');
+                return;
+            }
+            if (pass.length < 6) {
+                showAlert(alertEl, 'error', 'رمز عبور باید حداقل ۶ کاراکتر باشد.');
+                return;
+            }
+            if (pass !== pass2) {
+                showAlert(alertEl, 'error', 'رمز عبور و تکرار آن یکسان نیستند.');
+                return;
+            }
+
+            const btn = $('signupBtn');
+            setBusy(btn, true, 'در حال ثبت‌نام...');
+
+            try {
+                const { data, error } = await supabase.auth.signUp({
+                    email: email,
+                    password: pass,
+                    options: {
+                        data: { display_name: name },
+                        emailRedirectTo: REDIRECT_URL
+                    }
+                });
+
+                if (error) throw error;
+
+                if (data && data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+                    showAlert(alertEl, 'error', 'این ایمیل قبلاً ثبت شده است. لطفاً وارد شوید.');
+                } else if (data && data.session) {
+                    showAlert(alertEl, 'success', '✅ ثبت‌نام موفق! خوش آمدید.');
+                    $('signupForm').reset();
+                } else {
+                    showAlert(alertEl, 'success', '✅ ثبت‌نام موفق! لطفاً ایمیل خود را برای تأیید حساب بررسی کنید. سپس وارد شوید.');
+                    $('signupForm').reset();
+                }
+            } catch (err) {
+                let msg = err.message || 'خطای ناشناخته در ثبت‌نام.';
+                if (/already registered|already exists|user already/i.test(msg)) {
+                    msg = 'این ایمیل قبلاً ثبت شده است. لطفاً وارد شوید.';
+                } else if (/invalid email/i.test(msg)) {
+                    msg = 'آدرس ایمیل معتبر نیست.';
+                } else if (/password/i.test(msg) && /short/i.test(msg)) {
+                    msg = 'رمز عبور بسیار کوتاه است.';
+                }
+                showAlert(alertEl, 'error', 'خطا: ' + msg);
+            } finally {
+                setBusy(btn, false);
+            }
+        });
+
+        // ============================================================
+        // ۸) ورود
+        // ============================================================
+        $('loginForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const alertEl = $('loginAlert');
+            hideAlert(alertEl);
+
+            if (!supabaseReady) {
+                showAlert(alertEl, 'error', 'اتصال به Supabase برقرار نیست. لطفاً کلید عمومی را تنظیم کنید.');
+                return;
+            }
+
+            const email = $('loginEmail').value.trim();
+            const pass = $('loginPassword').value;
+
+            if (!isValidEmail(email)) {
+                showAlert(alertEl, 'error', 'آدرس ایمیل معتبر نیست.');
+                return;
+            }
+            if (!pass) {
+                showAlert(alertEl, 'error', 'لطفاً رمز عبور را وارد کنید.');
+                return;
+            }
+
+            const btn = $('loginBtn');
+            setBusy(btn, true, 'در حال ورود...');
+
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: pass
+                });
+
+                if (error) throw error;
+
+                if (data && data.user) {
+                    $('loginForm').reset();
+                    showAlert(alertEl, 'success', '✅ ورود موفق!');
+                } else {
+                    showAlert(alertEl, 'error', 'ورود ناموفق بود.');
+                }
+            } catch (err) {
+                let msg = err.message || 'خطای ناشناخته در ورود.';
+                if (/invalid login credentials|invalid credentials/i.test(msg)) {
+                    msg = 'ایمیل یا رمز عبور اشتباه است.';
+                } else if (/email not confirmed/i.test(msg)) {
+                    msg = 'ایمیل شما هنوز تأیید نشده است. لطفاً صندوق ایمیل خود را بررسی کنید.';
+                } else if (/too many requests/i.test(msg)) {
+                    msg = 'تلاش‌های زیاد. لطفاً کمی بعد دوباره امتحان کنید.';
+                }
+                showAlert(alertEl, 'error', 'خطا: ' + msg);
+            } finally {
+                setBusy(btn, false);
+            }
+        });
+
+        // ============================================================
+        // ۹) بازیابی رمز عبور (ارسال ایمیل)
+        // ============================================================
+        $('forgotForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const alertEl = $('forgotAlert');
+            hideAlert(alertEl);
+
+            if (!supabaseReady) {
+                showAlert(alertEl, 'error', 'اتصال به Supabase برقرار نیست.');
+                return;
+            }
+
+            const email = $('forgotEmail').value.trim();
+            if (!isValidEmail(email)) {
+                showAlert(alertEl, 'error', 'آدرس ایمیل معتبر نیست.');
+                return;
+            }
+
+            const btn = $('forgotBtn');
+            setBusy(btn, true, 'در حال ارسال...');
+
+            try {
+                const { error } = await supabase.auth.resetPasswordForEmail(email, {
+                    redirectTo: REDIRECT_URL
+                });
+                if (error) throw error;
+                showAlert(alertEl, 'success', '📧 لینک بازیابی رمز به ایمیل شما ارسال شد. لطفاً صندوق ورودی (و هرزنامه) را بررسی کنید.');
+                $('forgotForm').reset();
+            } catch (err) {
+                let msg = err.message || 'خطای ناشناخته.';
+                if (/user not found/i.test(msg)) {
+                    msg = 'کاربری با این ایمیل یافت نشد.';
+                } else if (/too many requests/i.test(msg)) {
+                    msg = 'درخواست‌های زیاد. لطفاً کمی بعد دوباره تلاش کنید.';
+                }
+                showAlert(alertEl, 'error', 'خطا: ' + msg);
+            } finally {
+                setBusy(btn, false);
+            }
+        });
+
+        // ============================================================
+        // ۱۰) تعیین رمز جدید (بعد از لینک بازیابی)
+        // ============================================================
+        $('resetForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const alertEl = $('resetAlert');
+            hideAlert(alertEl);
+
+            if (!supabaseReady) {
+                showAlert(alertEl, 'error', 'اتصال به Supabase برقرار نیست.');
+                return;
+            }
+
+            const p1 = $('resetPassword').value;
+            const p2 = $('resetPassword2').value;
+
+            if (p1.length < 6) {
+                showAlert(alertEl, 'error', 'رمز جدید باید حداقل ۶ کاراکتر باشد.');
+                return;
+            }
+            if (p1 !== p2) {
+                showAlert(alertEl, 'error', 'رمز جدید و تکرار آن یکسان نیستند.');
+                return;
+            }
+
+            const btn = $('resetBtn');
+            setBusy(btn, true, 'در حال ذخیره...');
+
+            try {
+                const { error } = await supabase.auth.updateUser({ password: p1 });
+                if (error) throw error;
+
+                showAlert(alertEl, 'success', '✅ رمز عبور با موفقیت تغییر کرد. اکنون می‌توانید وارد شوید.');
+
+                // خارج شدن از حالت بازیابی و پاک‌سازی URL
+                exitRecoveryMode();
+
+                // خروج از نشست موقت بازیابی
+                try { await supabase.auth.signOut(); } catch (e) { /* بی‌اهمیت */ }
+
+                // بازگشت به فرم ورود پس از نمایش پیام موفقیت
+                setTimeout(() => {
+                    showAuthTab('login');
+                    // انتقال پیام موفقیت به فرم ورود
+                    showAlert($('loginAlert'), 'success', '✅ رمز عبور با موفقیت تغییر کرد. لطفاً با رمز جدید وارد شوید.');
+                    hideAlert(alertEl);
+                    // پیش‌پر کردن ایمیل در صورت وجود در URL قبلی
+                    $('loginForm').reset();
+                    $('loginPassword').focus();
+                }, 2000);
+            } catch (err) {
+                let msg = err.message || 'خطای ناشناخته.';
+                if (/same password/i.test(msg)) {
+                    msg = 'رمز جدید نباید با رمز قبلی یکسان باشد.';
+                }
+                showAlert(alertEl, 'error', 'خطا: ' + msg);
+            } finally {
+                setBusy(btn, false);
+            }
+        });
+
+        // ============================================================
+        // ۱۱) پنل کاربری: نمایش اطلاعات
+        // ============================================================
+        function renderUser(user) {
+            if (!user) {
+                showAuth();
+                return;
+            }
+            // اگر در حالت بازیابی هستیم، پنل را نمایش نده
+            if (isRecoveryMode) return;
+
+            const meta = user.user_metadata || {};
+            const name = (meta.display_name && String(meta.display_name).trim()) || '';
+            const email = user.email || '';
+
+            const display = name || (email ? email.split('@')[0] : 'کاربر');
+
+            $('panelName').textContent = display;
+            $('panelEmail').textContent = email;
+            $('panelJoined').textContent = formatDate(user.created_at);
+            $('panelId').textContent = user.id || '—';
+            $('avatarInitial').textContent = display.charAt(0).toUpperCase() || 'N';
+            $('profileName').value = name;
+
+            showPanel();
+        }
+
+        // ============================================================
+        // ۱۲) ویرایش نام نمایشی
+        // ============================================================
+        $('profileForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const alertEl = $('profileAlert');
+            hideAlert(alertEl);
+
+            if (!supabaseReady) {
+                showAlert(alertEl, 'error', 'اتصال به Supabase برقرار نیست.');
+                return;
+            }
+
+            const newName = $('profileName').value.trim();
+            if (newName.length < 2) {
+                showAlert(alertEl, 'error', 'نام نمایشی باید حداقل ۲ کاراکتر باشد.');
+                return;
+            }
+
+            const btn = $('profileBtn');
+            setBusy(btn, true, 'در حال ذخیره...');
+
+            try {
+                const { data, error } = await supabase.auth.updateUser({
+                    data: { display_name: newName }
+                });
+                if (error) throw error;
+
+                if (data && data.user) {
+                    const meta = data.user.user_metadata || {};
+                    const n = (meta.display_name && String(meta.display_name).trim()) || newName;
+                    $('panelName').textContent = n;
+                    $('avatarInitial').textContent = n.charAt(0).toUpperCase() || 'N';
+                }
+                showAlert(alertEl, 'success', '✅ نام نمایشی با موفقیت به‌روزرسانی شد.');
+            } catch (err) {
+                showAlert(alertEl, 'error', 'خطا: ' + (err.message || 'ناموفق در ذخیره تغییرات.'));
+            } finally {
+                setBusy(btn, false);
+            }
+        });
+
+        // ============================================================
+        // ۱۳) تغییر رمز عبور از داخل پنل
+        // ============================================================
+        $('changePassForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const alertEl = $('changePassAlert');
+            hideAlert(alertEl);
+
+            if (!supabaseReady) {
+                showAlert(alertEl, 'error', 'اتصال به Supabase برقرار نیست.');
+                return;
+            }
+
+            const p1 = $('newPass').value;
+            const p2 = $('newPass2').value;
+
+            if (p1.length < 6) {
+                showAlert(alertEl, 'error', 'رمز جدید باید حداقل ۶ کاراکتر باشد.');
+                return;
+            }
+            if (p1 !== p2) {
+                showAlert(alertEl, 'error', 'رمز جدید و تکرار آن یکسان نیستند.');
+                return;
+            }
+
+            const btn = $('changePassBtn');
+            setBusy(btn, true, 'در حال تغییر...');
+
+            try {
+                const { error } = await supabase.auth.updateUser({ password: p1 });
+                if (error) throw error;
+                showAlert(alertEl, 'success', '✅ رمز عبور با موفقیت تغییر کرد.');
+                $('changePassForm').reset();
+            } catch (err) {
+                let msg = err.message || 'خطای ناشناخته.';
+                if (/same password/i.test(msg)) {
+                    msg = 'رمز جدید نباید با رمز قبلی یکسان باشد.';
+                }
+                showAlert(alertEl, 'error', 'خطا: ' + msg);
+            } finally {
+                setBusy(btn, false);
+            }
+        });
+
+        // ============================================================
+        // ۱۴) خروج
+        // ============================================================
+        $('logoutBtn').addEventListener('click', async function () {
+            if (!supabaseReady) {
+                showAuth();
+                return;
+            }
+            const btn = $('logoutBtn');
+            setBusy(btn, true, 'در حال خروج...');
+            try {
+                await supabase.auth.signOut();
+                $('loginForm').reset();
+                $('signupForm').reset();
+                exitRecoveryMode();
+                showAuth();
+                showAlert($('loginAlert'), 'success', '👋 با موفقیت خارج شدید.');
+            } catch (err) {
+                showAlert($('loginAlert'), 'error', 'خطا در خروج: ' + (err.message || ''));
+            } finally {
+                setBusy(btn, false);
+            }
+        });
+
+        // ============================================================
+        // ۱۵) تشخیص پارامترهای URL برای حالت بازیابی
+        // ============================================================
+        function detectRecoveryFromUrl() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const hash = window.location.hash || '';
+                return (
+                    params.get('type') === 'recovery' ||
+                    /(?:^|[#&?])type=recovery(?:&|$)/.test(hash)
+                );
+            } catch (e) {
+                return false;
+            }
+        }
+
+        // ============================================================
+        // ۱۶) راه‌اندازی اولیه
+        // ============================================================
+        async function init() {
+            if (!supabaseReady) {
+                showAuth();
+                return;
+            }
+
+            const recoveryInUrl = detectRecoveryFromUrl();
+
+            try {
+                const { data, error } = await supabase.auth.getSession();
+                if (error) throw error;
+
+                const session = data && data.session;
+                const user = session && session.user;
+
+                if (recoveryInUrl) {
+                    // اگر لینک بازیابی در URL هست، حالت بازیابی را فعال کن
+                    showReset();
+                    // توجه: رویداد PASSWORD_RECOVERY نیز جداگانه مدیریت می‌شود
+                    return;
+                }
+
+                if (user) {
+                    renderUser(user);
+                } else {
+                    showAuth();
+                }
+            } catch (err) {
+                console.error('getSession error:', err);
+                if (recoveryInUrl) {
+                    showReset();
+                } else {
+                    showAuth();
+                }
+            }
+        }
+
+        // ============================================================
+        // ۱۷) گوش دادن به تغییرات احراز هویت (شامل PASSWORD_RECOVERY)
+        // ============================================================
+        if (supabaseReady && supabase) {
+            supabase.auth.onAuthStateChange(function (event, session) {
+                console.log('[Auth event]', event);
+
+                if (event === 'PASSWORD_RECOVERY') {
+                    // Supabase پس از کلیک روی لینک بازیابی این رویداد را می‌فرستد
+                    // حتی اگر پارامتر type=recovery در URL پاک شده باشد
+                    isRecoveryMode = true;
+                    showReset();
+                    return;
+                }
+
+                if (event === 'SIGNED_IN' && session && session.user) {
+                    // اگر در حالت بازیابی هستیم، وارد پنل نشو
+                    if (isRecoveryMode) return;
+                    renderUser(session.user);
+                    return;
+                }
+
+                if (event === 'SIGNED_OUT') {
+                    if (isRecoveryMode) {
+                        // پس از ذخیره رمز جدید، ما خودمان signOut کرده‌ایم؛
+                        // حالت بازیابی باید تا بازگشت به ورود حفظ شود
+                        // (exitRecoveryMode قبلاً صدا زده شده است)
+                        return;
+                    }
+                    showAuth();
+                    return;
+                }
+
+                if (event === 'USER_UPDATED' && session && session.user) {
+                    if (isRecoveryMode) return;
+                    // به‌روزرسانی جزئی پنل بدون جابه‌جایی
+                    const meta = session.user.user_metadata || {};
+                    const name = (meta.display_name && String(meta.display_name).trim()) || '';
+                    if (name && $('panelName')) {
+                        $('panelName').textContent = name;
+                        $('avatarInitial').textContent = name.charAt(0).toUpperCase() || 'N';
+                    }
+                }
+            });
+        }
+
+        // اجرا
+        if (document.readyState === 'loading') {
+            window.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    })();
+    </script>
 </body>
-</html>
+  </html>
