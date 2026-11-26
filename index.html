@@ -1,94 +1,469 @@
+
 <!doctype html>
 <html lang="fa" dir="rtl">
-<head><meta name="google-site-verification" content="dxi_lAcBma8CaTd7zBkwn7NWnNUb1P_2radDAKyS_I0" />
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ناناس کده | بازی موبایلی ناناس کده</title>
-<meta name="description" content="ناناس کده بازی موبایلی سرگرم‌کننده و رایگان؛ ناناس‌ها را جمع کن، از بمب‌ها فرار کن و رکورد بزن. معرفی، آموزش و دانلود بازی ناناس کده.">
-<meta name="keywords" content="ناناس کده, بازی ناناس کده, دانلود بازی ناناس, بازی موبایلی, بازی ایرانی">
-<meta property="og:title" content="ناناس کده | بازی موبایلی">
-<meta property="og:description" content="بازی کن، ناناس جمع کن، رکورد بزن! همین حالا ناناس کده را بازی کن.">
-<meta property="og:type" content="website">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"VideoGame","name":"ناناس کده","applicationCategory":"Game","operatingSystem":"Web","inLanguage":"fa","offers":{"@type":"Offer","price":"0","priceCurrency":"IRR"}}
-</script>
+<meta name="google-site-verification" content="dxi_lAcBma8CaTd7zBkwn7NWnNUb1P_2radDAKyS_I0">
+<title>ناناس کده | بازی آنلاین</title>
+<meta name="description" content="بازی آنلاین ناناس کده؛ ناناس جمع کن، رکورد بزن و با دوستانت رقابت کن.">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Tahoma,Vazirmatn,sans-serif;background:#0E0E1A;color:#fff;line-height:1.9}
-a{color:inherit;text-decoration:none}
+body{font-family:Tahoma,sans-serif;background:#0E0E1A;color:#fff;line-height:1.9}
 .wrap{max-width:720px;margin:auto;padding:0 16px}
-header{position:sticky;top:0;background:#0E0E1AEE;backdrop-filter:blur(8px);border-bottom:1px solid #222;z-index:10}
-nav{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;max-width:720px;margin:auto}
-.logo{font-weight:900;font-size:20px}.logo span{color:#FFD93D}
-.btn{display:inline-block;background:#FFD93D;color:#111;font-weight:800;padding:12px 26px;border-radius:14px;border:none;font-size:17px}
-.btn2{display:inline-block;border:2px solid #FFD93D;color:#FFD93D;font-weight:800;padding:10px 24px;border-radius:14px}
-.hero{text-align:center;padding:48px 16px 24px;background:radial-gradient(600px 300px at 50% 0%,#2a1a05,transparent),linear-gradient(#0E0E1A,#171730)}
-.hero h1{font-size:44px;font-weight:900;line-height:1.3}.hero h1 span{color:#FFD93D}
-.hero p{color:#ccc;margin:12px 0 20px;font-size:17px}
-.badges{display:flex;gap:8px;justify-content:center;margin:16px 0;flex-wrap:wrap}
-.badge{background:#1f1f33;border:1px solid #333;padding:6px 14px;border-radius:20px;font-size:14px;color:#FFD93D}
-section{padding:28px 0}
-.card{background:#181828;border:1px solid #2a2a44;border-radius:18px;padding:20px;margin:12px 0}
-.card h2{color:#FFD93D;font-size:22px;margin-bottom:10px}
-ul.feat{list-style:none}ul.feat li{padding:8px 0;border-bottom:1px dashed #2c2c4a}ul.feat li:last-child{border:none}
+header{background:#151526;padding:14px;border-bottom:1px solid #333}
+nav{max-width:720px;margin:auto;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:21px;font-weight:bold;color:#FFD93D}
+section{padding:22px 0}
+.card{background:#181828;border:1px solid #33334d;border-radius:18px;padding:20px;margin:12px 0}
+h2{color:#FFD93D;margin-bottom:12px}
+.hero{text-align:center;padding:35px 10px;background:linear-gradient(#2a1a05,#171730)}
+.hero h1{font-size:38px;color:#FFD93D}
+.hero p{color:#ddd;margin:12px}
+.btn{background:#FFD93D;color:#111;border:0;border-radius:12px;padding:11px 20px;font-weight:bold;cursor:pointer;font-size:15px}
+.btn2{background:#333;color:white;border:1px solid #666;border-radius:12px;padding:10px 16px;cursor:pointer}
+input{width:100%;padding:12px;margin:7px 0;border-radius:10px;border:1px solid #555;background:#10101d;color:white;font-size:15px}
+button{margin:5px 3px}
+small,.muted{color:#aaa}
 #gameBox{text-align:center}
 canvas{background:linear-gradient(#1a2b1a,#0e1a0e);border-radius:16px;border:2px solid #6BCB77;touch-action:none;max-width:100%;display:block;margin:12px auto}
-.score{display:flex;justify-content:space-between;font-weight:800;font-size:18px}
+.score{display:flex;justify-content:space-between;font-weight:bold;gap:8px;flex-wrap:wrap}
 table{width:100%;border-collapse:collapse;margin-top:10px}
-th,td{padding:10px;border-bottom:1px solid #2a2a44;font-size:15px;text-align:right}
+td,th{text-align:right;padding:9px;border-bottom:1px solid #333}
 th{color:#6BCB77}
-details{background:#181828;border-radius:12px;padding:12px 16px;margin:8px 0;border:1px solid #2a2a44}
-summary{font-weight:800;cursor:pointer}
-footer{text-align:center;padding:30px 16px;color:#888;font-size:14px;border-top:1px solid #222;margin-top:20px}
+.status{padding:10px;background:#25253a;border-radius:10px;margin:10px 0;color:#FFD93D}
+footer{text-align:center;color:#888;padding:25px}
+.hidden{display:none}
 </style>
 </head>
 <body>
-<header><nav><div class="logo">🍍 <span>ناناس</span> کده</div><a class="btn" href="#play">بازی کن</a></nav></header>
+
+<header>
+<nav>
+<div class="logo">🍍 ناناس کده</div>
+<a href="#play" class="btn">بازی کن</a>
+</nav>
+</header>
+
 <div class="hero">
+<h1>بازی ناناس کده 🍍</h1>
+<p>ناناس‌ها را جمع کن، از بمب‌ها فرار کن و رکورد بزن!</p>
+<a href="#play" class="btn">شروع بازی</a>
+</div>
+
 <div class="wrap">
-<h1>بازی <span>ناناس کده</span></h1>
-<p>سریع‌ترین بازی جمع‌کردن ناناس! سبد را با انگشت حرکت بده، ناناس‌ها را بگیر و از بمب‌ها فرار کن. کاملا رایگان و بدون نصب — مخصوص موبایل.</p>
-<div>
-<a class="btn" href="#play">▶ شروع بازی آنلاین</a>
-<a class="btn2" href="#" onclick="alert('لینک دانلود نسخه اندروید را اینجا بگذار');return false;">دانلود اندروید</a>
+
+<section id="account">
+<div class="card">
+<h2>👤 حساب کاربری</h2>
+
+<div id="loggedOut">
+<p class="muted">برای ذخیره رکورد آنلاین، وارد حساب شو یا ثبت‌نام کن.</p>
+<input id="username" placeholder="نام بازیکن (برای ثبت‌نام)">
+<input id="email" type="email" placeholder="ایمیل">
+<input id="password" type="password" placeholder="رمز عبور">
+<button class="btn" id="signupBtn">ثبت‌نام</button>
+<button class="btn2" id="loginBtn">ورود</button>
+<button class="btn2" id="resetBtn">فراموشی رمز</button>
 </div>
-<div class="badges"><div class="badge">⭐ امتیاز 4.8</div><div class="badge">📱 موبایل و کامپیوتر</div><div class="badge">🆓 رایگان</div></div>
+
+<div id="loggedIn" class="hidden">
+<p>خوش آمدی، <strong id="playerName"></strong> 🍍</p>
+<p class="muted">حساب تو به بازی متصل است.</p>
+<button class="btn2" id="logoutBtn">خروج از حساب</button>
 </div>
+
+<div id="authStatus" class="status">وضعیت: آماده</div>
 </div>
-<div class="wrap">
-<section><div class="card"><h2>🍍 ناناس کده چیست؟</h2><p>ناناس کده یک بازی سرعتی و رکوردی است. در هر مرحله ناناس‌های خوشمزه از بالا می‌ریزند. تو باید با سبد آن‌ها را جمع کنی. هر ناناس ۱۰ امتیاز دارد. اگر بمب بگیری یک جان کم می‌شود. سه جان داری — تا کجا می‌توانی پیش بروی؟</p></div></section>
-<section id="play"><div class="card" id="gameBox"><h2>🎮 بازی آنلاین ناناس کده</h2><p style="color:#aaa;font-size:14px">با انگشت یا موس سبد را حرکت بده</p><div class="score"><div>امتیاز: <span id="sc">۰</span></div><div>❤️ جان: <span id="life">۳</span></div><div>🏆 رکورد: <span id="best">۰</span></div></div><canvas id="game" width="340" height="440"></canvas><br><button class="btn" id="startBtn">شروع</button></div></section>
-<section><div class="card"><h2>✨ ویژگی‌ها</h2><ul class="feat"><li>✅ اجرای مستقیم در مرورگر گوشی، بدون نصب</li><li>✅ ذخیره رکورد در گوشی شما</li><li>✅ مرحله‌های سرعتی و بمب‌های غافلگیرکننده</li><li>✅ مناسب بچه‌ها و بزرگسالان</li></ul></div></section>
-<section><div class="card"><h2>📖 آموزش بازی ناناس کده</h2><p>۱. دکمه شروع را بزن.<br>۲. انگشتت را روی صفحه نگه دار و چپ و راست کن تا سبد حرکت کند.<br>۳. 🍍 بگیر = +۱۰ امتیاز.<br>۴. 💣 نگیری — یک جان کم می‌کند.<br>۵. با بالا رفتن امتیاز، سرعت بیشتر می‌شود.</p></div></section>
-<section><div class="card"><h2>🏆 جدول امتیاز</h2><table><tr><th>رتبه</th><th>بازیکن</th><th>امتیاز</th></tr><tr><td>۱</td><td>شاه ناناس</td><td>۵۰۰</td></tr><tr><td>۲</td><td>ناناس‌باز</td><td>۳۲۰</td></tr><tr><td>۳</td><td>تو؟</td><td id="youBest">—</td></tr></table><p style="font-size:13px;color:#888">رکورد تو به‌صورت خودکار در گوشی ذخیره می‌شود.</p></div></section>
-<section><h2 style="color:#FFD93D;margin-bottom:8px">❓ سوالات پرتکرار</h2><details><summary>آیا ناناس کده رایگان است؟</summary><p>بله، نسخه وب کاملا رایگان است و بدون نصب در مرورگر اجرا می‌شود.</p></details><details><summary>چطور در گوگل پیدا می‌شود؟</summary><p>کافی است «ناناس کده» را در گوگل جست‌وجو کنید تا وارد همین سایت شوید.</p></details><details><summary>روی گوشی اجرا می‌شود؟</summary><p>بله، کاملا برای موبایل بهینه شده و با لمس کار می‌کند.</p></details></section>
+</section>
+
+<section id="play">
+<div class="card" id="gameBox">
+<h2>🎮 بازی آنلاین</h2>
+<p class="muted">با انگشت یا موس سبد را حرکت بده.</p>
+<div class="score">
+<div>امتیاز: <span id="sc">۰</span></div>
+<div>❤️ جان: <span id="life">۳</span></div>
+<div>🏆 رکورد: <span id="best">۰</span></div>
 </div>
-<footer>© ۱۴۰۵ ناناس کده — ساخته‌شده با عشق 🍍<br>ارتباط: info@example.com</footer>
+<canvas id="game" width="340" height="440"></canvas>
+<button class="btn" id="startBtn">شروع بازی</button>
+</div>
+</section>
+
+<section>
+<div class="card">
+<h2>🏆 جدول رکوردهای آنلاین</h2>
+<table>
+<thead><tr><th>رتبه</th><th>بازیکن</th><th>امتیاز</th></tr></thead>
+<tbody id="leaderboard">
+<tr><td colspan="3">در حال دریافت اطلاعات...</td></tr>
+</tbody>
+</table>
+<button class="btn2" id="refreshBoard">به‌روزرسانی جدول</button>
+</div>
+</section>
+
+<section>
+<div class="card">
+<h2>📖 آموزش بازی</h2>
+<p>۱. دکمه شروع را بزن.</p>
+<p>۲. سبد را با انگشت یا موس حرکت بده.</p>
+<p>۳. هر ناناس ۱۰ امتیاز دارد.</p>
+<p>۴. مراقب بمب‌ها باش؛ سه جان داری!</p>
+</div>
+</section>
+
+</div>
+
+<footer>© ۱۴۰۵ ناناس کده 🍍</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-var c=document.getElementById('game'),x=c.getContext('2d');
-var scEl=document.getElementById('sc'),lifeEl=document.getElementById('life'),bestEl=document.getElementById('best'),youBest=document.getElementById('youBest');
-function fa(n){return n.toLocaleString('fa-IR')}
-var score=0,life=3,run=false,bx=140,items=[],best=parseInt(localStorage.getItem('nanas_best')||'0');
-bestEl.textContent=fa(best);youBest.textContent=fa(best);
-x.font='28px serif';x.textAlign='center';
-function spawn(){var r=Math.random();var ch=r<0.75?'🍍':'💣';items.push({x:20+Math.random()*300,y:-30,s:2+Math.random()*2+score/200,c:ch});}
-c.addEventListener('touchmove',function(e){var t=c.getBoundingClientRect();bx=e.touches[0].clientX-t.left-35;e.preventDefault();},{passive:false});
-c.addEventListener('mousemove',function(e){var t=c.getBoundingClientRect();bx=e.clientX-t.left-35;});
-document.getElementById('startBtn').onclick=function(){score=0;life=3;items=[];run=true;this.textContent='دوباره';loop();};
-function loop(){
-if(!run)return;
-x.clearRect(0,0,340,440);
-if(Math.random()<0.08)spawn();
-x.font='40px serif';x.fillText('🧺',bx+35,420);
-for(var i=items.length-1;i>=0;i--){var it=items[i];it.y+=it.s;x.font='30px serif';x.fillText(it.c,it.x,it.y);
-if(it.y>400&&it.y<430&&it.x>bx-10&&it.x<bx+80){
-if(it.c=='🍍'){score+=10;}else{life--;lifeEl.textContent=fa(life);if(life<=0){run=false;if(score>best){best=score;localStorage.setItem('nanas_best',best);bestEl.textContent=fa(best);youBest.textContent=fa(best);}alert('بازی تمام شد! امتیاز: '+score);}}
-items.splice(i,1);continue;}
-if(it.y>460)items.splice(i,1);}
-scEl.textContent=fa(score);
-if(run)requestAnimationFrame(loop);
+const SUPABASE_URL = 'https://hnmelfroqpmhfjwnrfmn.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_Ia2VDkgSJGIDp09eeN8n4A_fOfV-Jfy';
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const statusBox = document.getElementById('authStatus');
+const loggedOut = document.getElementById('loggedOut');
+const loggedIn = document.getElementById('loggedIn');
+const playerName = document.getElementById('playerName');
+
+let currentUser = null;
+
+function say(message){
+  statusBox.textContent = message;
 }
-x.fillStyle='#fff';x.font='18px Tahoma';x.fillText('دکمه شروع را بزن 🍍',170,220);
+
+function fa(n){
+  return Number(n || 0).toLocaleString('fa-IR');
+}
+
+async function ensureProfile(user){
+  let name = user.user_metadata?.username || user.email?.split('@')[0] || 'بازیکن';
+  name = name.trim().slice(0,24);
+
+  let result = await sb.from('profiles').upsert(
+    {id:user.id, username:name},
+    {onConflict:'id', ignoreDuplicates:true}
+  );
+
+  if(result.error){
+    const fallback = 'بازیکن_' + user.id.slice(0,6);
+    result = await sb.from('profiles').upsert(
+      {id:user.id, username:fallback},
+      {onConflict:'id', ignoreDuplicates:true}
+    );
+  }
+
+  const profile = await sb.from('profiles')
+    .select('username')
+    .eq('id',user.id)
+    .maybeSingle();
+
+  return profile.data?.username || name;
+}
+
+async function updateAuthUI(user){
+  currentUser = user || null;
+
+  if(user){
+    loggedOut.classList.add('hidden');
+    loggedIn.classList.remove('hidden');
+
+    try{
+      const name = await ensureProfile(user);
+      playerName.textContent = name;
+      say('وارد حساب خود شده‌ای.');
+    }catch(error){
+      playerName.textContent = user.email || 'بازیکن';
+      say('وارد شدی؛ اما دریافت پروفایل با مشکل روبه‌رو شد.');
+    }
+
+    loadBestScore();
+  }else{
+    loggedIn.classList.add('hidden');
+    loggedOut.classList.remove('hidden');
+    say('برای ذخیره آنلاین رکورد وارد حساب شو.');
+  }
+
+  loadLeaderboard();
+}
+
+document.getElementById('signupBtn').onclick = async function(){
+  const username = document.getElementById('username').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+
+  if(!username || !email || !password){
+    say('نام بازیکن، ایمیل و رمز عبور را وارد کن.');
+    return;
+  }
+
+  if(password.length < 6){
+    say('رمز عبور باید حداقل ۶ کاراکتر باشد.');
+    return;
+  }
+
+  say('در حال ساخت حساب...');
+  const {data,error} = await sb.auth.signUp({
+    email,
+    password,
+    options:{data:{username}}
+  });
+
+  if(error){
+    say('خطا در ثبت‌نام: ' + error.message);
+    return;
+  }
+
+  if(data.session){
+    await updateAuthUI(data.user);
+    say('حساب ساخته شد. خوش آمدی!');
+  }else{
+    say('حساب ساخته شد. ایمیلت را برای تأیید بررسی کن، سپس وارد شو.');
+  }
+};
+
+document.getElementById('loginBtn').onclick = async function(){
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+
+  if(!email || !password){
+    say('ایمیل و رمز عبور را وارد کن.');
+    return;
+  }
+
+  say('در حال ورود...');
+  const {data,error} = await sb.auth.signInWithPassword({email,password});
+
+  if(error){
+    say('خطا در ورود: ' + error.message);
+    return;
+  }
+
+  await updateAuthUI(data.user);
+};
+
+document.getElementById('logoutBtn').onclick = async function(){
+  const {error} = await sb.auth.signOut();
+  if(error){
+    say('خروج انجام نشد: ' + error.message);
+    return;
+  }
+  await updateAuthUI(null);
+};
+
+document.getElementById('resetBtn').onclick = async function(){
+  const email = document.getElementById('email').value.trim();
+  if(!email){
+    say('اول ایمیلت را وارد کن.');
+    return;
+  }
+
+  const {error} = await sb.auth.resetPasswordForEmail(email);
+  say(error ? 'خطا: ' + error.message : 'اگر این ایمیل ثبت شده باشد، لینک بازیابی برایش ارسال می‌شود.');
+};
+
+sb.auth.onAuthStateChange((event,session)=>{
+  updateAuthUI(session?.user || null);
+});
+
+async function loadLeaderboard(){
+  const body = document.getElementById('leaderboard');
+
+  const {data:scores,error} = await sb
+    .from('scores')
+    .select('user_id,best_score')
+    .order('best_score',{ascending:false})
+    .limit(10);
+
+  if(error){
+    body.innerHTML = '<tr><td colspan="3">دریافت جدول با مشکل روبه‌رو شد.</td></tr>';
+    return;
+  }
+
+  if(!scores || scores.length===0){
+    body.innerHTML = '<tr><td colspan="3">هنوز رکوردی ثبت نشده است.</td></tr>';
+    return;
+  }
+
+  const ids = scores.map(item=>item.user_id);
+  const {data:profiles} = await sb
+    .from('profiles')
+    .select('id,username')
+    .in('id',ids);
+
+  const names = {};
+  (profiles || []).forEach(p=>names[p.id]=p.username);
+
+  body.innerHTML = '';
+  scores.forEach((item,index)=>{
+    const tr = document.createElement('tr');
+    const values = [
+      fa(index+1),
+      names[item.user_id] || 'بازیکن',
+      fa(item.best_score)
+    ];
+
+    values.forEach(value=>{
+      const td = document.createElement('td');
+      td.textContent = value;
+      tr.appendChild(td);
+    });
+
+    body.appendChild(tr);
+  });
+}
+
+document.getElementById('refreshBoard').onclick = loadLeaderboard;
+
+let c = document.getElementById('game');
+let ctx = c.getContext('2d');
+let score = 0, life = 3, running = false, bx = 140, items = [];
+let best = Number(localStorage.getItem('nanas_best') || 0);
+
+const scEl = document.getElementById('sc');
+const lifeEl = document.getElementById('life');
+const bestEl = document.getElementById('best');
+
+bestEl.textContent = fa(best);
+
+async function loadBestScore(){
+  if(!currentUser) return;
+
+  const {data,error} = await sb.from('scores')
+    .select('best_score')
+    .eq('user_id',currentUser.id)
+    .maybeSingle();
+
+  if(!error && data && data.best_score > best){
+    best = data.best_score;
+    localStorage.setItem('nanas_best',String(best));
+    bestEl.textContent = fa(best);
+  }
+}
+
+async function saveOnlineScore(value){
+  if(!currentUser){
+    say('برای ذخیره آنلاین رکورد، ابتدا وارد حساب شو.');
+    return;
+  }
+
+  const {data:old} = await sb.from('scores')
+    .select('best_score')
+    .eq('user_id',currentUser.id)
+    .maybeSingle();
+
+  if(old && old.best_score >= value){
+    say('رکورد آنلاین قبلی‌ات حفظ شد.');
+    return;
+  }
+
+  const {error} = await sb.from('scores').upsert({
+    user_id:currentUser.id,
+    best_score:value,
+    updated_at:new Date().toISOString()
+  },{onConflict:'user_id'});
+
+  if(error){
+    say('رکورد محلی ذخیره شد؛ ذخیره آنلاین با مشکل روبه‌رو شد.');
+  }else{
+    say('رکورد جدیدت آنلاین ذخیره شد! 🏆');
+    loadLeaderboard();
+  }
+}
+
+function spawn(){
+  const ch = Math.random()<0.75 ? '🍍' : '💣';
+  items.push({
+    x:20+Math.random()*300,
+    y:-30,
+    s:2+Math.random()*2+score/200,
+    c:ch
+  });
+}
+
+c.addEventListener('touchmove',function(e){
+  const rect=c.getBoundingClientRect();
+  bx=(e.touches[0].clientX-rect.left)*(340/rect.width)-35;
+  e.preventDefault();
+},{passive:false});
+
+c.addEventListener('mousemove',function(e){
+  const rect=c.getBoundingClientRect();
+  bx=(e.clientX-rect.left)*(340/rect.width)-35;
+});
+
+document.getElementById('startBtn').onclick=function(){
+  score=0;
+  life=3;
+  items=[];
+  running=true;
+  scEl.textContent=fa(score);
+  lifeEl.textContent=fa(life);
+  this.textContent='شروع دوباره';
+  loop();
+};
+
+function loop(){
+  if(!running) return;
+
+  ctx.clearRect(0,0,340,440);
+
+  if(Math.random()<0.08) spawn();
+
+  ctx.font='40px serif';
+  ctx.textAlign='center';
+  ctx.fillText('🧺',Math.max(35,Math.min(305,bx+35)),420);
+
+  for(let i=items.length-1;i>=0;i--){
+    const it=items[i];
+    it.y+=it.s;
+
+    ctx.font='30px serif';
+    ctx.fillText(it.c,it.x,it.y);
+
+    if(it.y>390 && it.y<430 && it.x>bx-10 && it.x<bx+80){
+      if(it.c==='🍍'){
+        score+=10;
+      }else{
+        life--;
+        lifeEl.textContent=fa(life);
+
+        if(life<=0){
+          running=false;
+
+          if(score>best){
+            best=score;
+            localStorage.setItem('nanas_best',String(best));
+            bestEl.textContent=fa(best);
+          }
+
+          saveOnlineScore(score);
+          alert('بازی تمام شد! امتیاز: '+fa(score));
+        }
+      }
+
+      items.splice(i,1);
+      continue;
+    }
+
+    if(it.y>460) items.splice(i,1);
+  }
+
+  scEl.textContent=fa(score);
+
+  if(running) requestAnimationFrame(loop);
+}
+
+ctx.fillStyle='#fff';
+ctx.font='18px Tahoma';
+ctx.textAlign='center';
+ctx.fillText('دکمه شروع را بزن 🍍',170,220);
+
+updateAuthUI(null);
 </script>
 </body>
 </html>
