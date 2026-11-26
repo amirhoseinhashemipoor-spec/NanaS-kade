@@ -1,201 +1,111 @@
+
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ناناس کده</title>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ناناس کده 🍍</title>
 <style>
-:root{
-  --gold:#f5c518;
-  --gold-dark:#c99700;
-  --red:#8e1b1b;
-  --dark:#0e1320;
-  --dark-2:#151c2e;
-  --text:#f4f1e8;
-  --muted:#b9b6a8;
-}
-*{margin:0;padding:0;box-sizing:border-box}
+*{box-sizing:border-box;margin:0;padding:0}
 body{
-  font-family:'Vazirmatn',sans-serif;
-  background:radial-gradient(circle at 50% 0%, #1b2540 0%, var(--dark) 60%);
-  color:var(--text);
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding:24px;
-  overflow-x:hidden;
+font-family:Tahoma,sans-serif;
+background:linear-gradient(135deg,#090d1c,#192744,#090d1c);
+color:white;
+min-height:100vh;
+text-align:center;
+padding:30px 16px;
 }
-
-/* ستاره‌های پس‌زمینه */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background-image:
-    radial-gradient(2px 2px at 20% 30%, #fff8 40%, transparent 41%),
-    radial-gradient(1.5px 1.5px at 70% 15%, #fff6 40%, transparent 41%),
-    radial-gradient(2px 2px at 85% 60%, #fffa 40%, transparent 41%),
-    radial-gradient(1px 1px at 40% 80%, #fff5 40%, transparent 41%),
-    radial-gradient(1.5px 1.5px at 10% 70%, #fff7 40%, transparent 41%);
-  pointer-events:none;
-  z-index:0;
+header{padding:65px 10px 35px}
+h1{
+font-size:clamp(40px,8vw,70px);
+color:#ffd84d;
+text-shadow:0 0 25px #f5bd3d;
 }
-
-/* هدر / عنوان */
-header{
-  position:relative;
-  z-index:1;
-  text-align:center;
-  margin:20px 0 10px;
+header p{color:#ddd;margin-top:20px;font-size:18px}
+.buttons{margin:25px auto 45px}
+button{
+padding:14px 25px;
+margin:7px;
+border:0;
+border-radius:12px;
+background:#f5c518;
+color:#171321;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
 }
-header h1{
-  font-size:clamp(2.2rem, 8vw, 4rem);
-  font-weight:800;
-  background:linear-gradient(180deg, #ffe680 0%, var(--gold) 45%, var(--gold-dark) 100%);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-  text-shadow:0 4px 18px rgba(245,197,24,.35);
-  letter-spacing:1px;
-}
-header p{
-  color:var(--muted);
-  margin-top:10px;
-  font-size:clamp(.95rem, 3vw, 1.1rem);
-}
-
-/* دکمه‌ها */
-.actions{
-  position:relative;
-  z-index:1;
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
-  justify-content:center;
-  margin:28px 0 40px;
-}
-.btn{
-  font-family:inherit;
-  font-size:1rem;
-  font-weight:500;
-  padding:14px 28px;
-  border-radius:14px;
-  border:none;
-  cursor:pointer;
-  transition:transform .15s ease, box-shadow .2s ease, background .2s;
-  text-decoration:none;
-  display:inline-block;
-}
-.btn-primary{
-  background:linear-gradient(135deg, var(--gold), var(--gold-dark));
-  color:#1a1400;
-  box-shadow:0 8px 22px rgba(245,197,24,.35);
-}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(245,197,24,.5)}
-.btn-outline{
-  background:transparent;
-  color:var(--gold);
-  border:2px solid var(--gold);
-}
-.btn-outline:hover{background:rgba(245,197,24,.12);transform:translateY(-2px)}
-
-/* کارت‌ها */
+button:hover{background:#ffe47a}
 .grid{
-  position:relative;
-  z-index:1;
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
-  gap:20px;
-  width:100%;
-  max-width:900px;
-  margin-bottom:50px;
+max-width:950px;
+margin:auto;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+gap:20px;
 }
 .card{
-  background:linear-gradient(160deg, var(--dark-2), #0b101b);
-  border:1px solid rgba(245,197,24,.18);
-  border-radius:18px;
-  padding:26px 22px;
-  text-align:center;
-  transition:transform .2s ease, border-color .2s, box-shadow .2s;
+padding:30px 20px;
+background:#172139;
+border:1px solid #b68b24;
+border-radius:20px;
+transition:.3s;
 }
-.card:hover{
-  transform:translateY(-5px);
-  border-color:rgba(245,197,24,.5);
-  box-shadow:0 14px 34px rgba(0,0,0,.45);
-}
-.card .icon{
-  font-size:2.2rem;
-  margin-bottom:12px;
-  filter:drop-shadow(0 0 10px rgba(245,197,24,.35));
-}
-.card h3{
-  font-size:1.15rem;
-  font-weight:800;
-  color:var(--gold);
-  margin-bottom:8px;
-}
-.card p{
-  font-size:.9rem;
-  color:var(--muted);
-  line-height:1.9;
-}
-
-/* فوتر */
-footer{
-  position:relative;
-  z-index:1;
-  margin-top:auto;
-  padding:18px;
-  font-size:.85rem;
-  color:var(--muted);
-  text-align:center;
-  border-top:1px solid rgba(255,255,255,.07);
-  width:100%;
-  max-width:900px;
-}
-footer span{color:var(--gold)}
+.card:hover{transform:translateY(-7px)}
+.icon{font-size:45px;margin-bottom:15px}
+h2{font-size:20px;color:#ffd84d;margin-bottom:12px}
+.card p{color:#d2d4dc;line-height:2}
+footer{margin:65px auto 10px;color:#aaa}
 </style>
 </head>
 <body>
 
-  <header>
-    <h1>ناناس کده</h1>
-    <p>به دنیای جادو و سرگرمی خوش اومدی ✨</p>
-  </header>
+<header>
+<h1>🍍 ناناس کده</h1>
+<p>به دنیای جادو، خیال و سرگرمی خوش اومدی ✨</p>
+</header>
 
-  <div class="actions">
-    <a href="#" class="btn btn-primary">ورود به کده 🪄</a>
-    <a href="#" class="btn btn-outline">درباره ما</a>
-  </div>
+<div class="buttons">
+<button onclick="welcome()">ورود به کده 🪄</button>
+<button onclick="about()">درباره ما</button>
+</div>
 
-  <main class="grid">
-    <div class="card">
-      <div class="icon">🧙‍♂️</div>
-      <h3>دوره‌های جادوگری</h3>
-      <p>آموزش قدم‌به‌قدم مهارت‌های جادویی برای مبتدی‌ها و حرفه‌ای‌ها.</p>
-    </div>
-    <div class="card">
-      <div class="icon">🦉</div>
-      <h3>پیام‌رسانی با جغد</h3>
-      <p>ارسال سریع و امن پیام‌ها به سراسر دنیای جادوگران.</p>
-    </div>
-    <div class="card">
-      <div class="icon">⚡</div>
-      <h3>طلسم و ورد</h3>
-      <p>مجموعه‌ای از وردهای مفید برای هر روز — از نور تا پرواز.</p>
-    </div>
-    <div class="card">
-      <div class="icon">🏰</div>
-      <h3>انجمن جادوگران</h3>
-      <p>با دیگر جادوگران گفتگو کن، تجربه به اشتراک بذار و تیم بساز.</p>
-    </div>
-  </main>
+<main class="grid">
+<div class="card">
+<div class="icon">🧙</div>
+<h2>دوره‌های جادوگری</h2>
+<p>دنیایی از آموزش‌ها و سرگرمی‌های جادویی منتظر توئه!</p>
+</div>
 
-  <footer>
-    ساخته‌شده با <span>عشق</span> در ناناس کده © ۲۰۲۵
-  </footer>
+<div class="card">
+<div class="icon">🦉</div>
+<h2>پیام‌رسانی با جغد</h2>
+<p>پیام‌های جادویی خودت رو برای دوستانت آماده کن!</p>
+</div>
+
+<div class="card">
+<div class="icon">⚡</div>
+<h2>طلسم و ورد</h2>
+<p>با وردهای شگفت‌انگیز وارد دنیای خیال شو!</p>
+</div>
+
+<div class="card">
+<div class="icon">🏰</div>
+<h2>انجمن جادوگران</h2>
+<p>اینجا جای دوستداران جادو و ماجراجوییه!</p>
+</div>
+</main>
+
+<footer>
+ساخته شده با ❤️ در ناناس کده © ۲۰۲۶
+</footer>
+
+<script>
+function welcome(){
+alert("به ناناس کده خوش اومدی! 🍍✨");
+}
+function about(){
+alert("ناناس کده، دنیایی برای جادو و سرگرمیه! ❤️");
+}
+</script>
 
 </body>
 </html>
