@@ -6,1021 +6,611 @@
 <title>Nanas Kade</title>
 <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
-:root{
- --navy:#080a1b;--gold:#d4af37;--gold-light:#f0d77b;
- --purple:#6b21a8;--purple-light:#a855f7;
- --white:#f8f7ff;--gray:#aaa6bd;
-}
+:root{--navy:#080a1b;--gold:#d4af37;--gold-light:#f0d77b;--purple:#6b21a8;--purple-light:#a855f7;--white:#f8f7ff;--gray:#aaa6bd}
 *{box-sizing:border-box;margin:0;padding:0}
-body{
- font-family:Vazirmatn,sans-serif;
- background:radial-gradient(ellipse at top,#251044 0%,#100c27 40%,#080a1b 100%);
- color:var(--white);min-height:100vh;overflow-x:hidden;
-}
+body{font-family:Vazirmatn,sans-serif;background:radial-gradient(ellipse at top,#251044,#100c27 40%,#080a1b);color:var(--white);min-height:100vh;overflow-x:hidden}
 button,input{font-family:inherit}
-.container{width:100%;max-width:900px;margin:auto;padding:20px;position:relative}
-.logo{
- text-align:center;font-size:2.5rem;font-weight:900;
- background:linear-gradient(135deg,#f0d77b,#a855f7,#d4af37);
- -webkit-background-clip:text;color:transparent;
- margin:20px 0 8px;
- text-shadow:0 0 25px #8b5cf655;
-}
+.container{width:100%;max-width:900px;margin:auto;padding:20px}
+.logo{text-align:center;font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#f0d77b,#a855f7,#d4af37);-webkit-background-clip:text;color:transparent;margin:20px 0 8px}
 .subtitle{text-align:center;color:var(--gray);margin-bottom:28px}
-.card{
- background:rgba(21,18,48,.95);
- border:1px solid #51416e;border-radius:17px;
- padding:23px;margin-bottom:18px;
- box-shadow:0 8px 30px #0004;
-}
+.card{background:rgba(21,18,48,.95);border:1px solid #51416e;border-radius:17px;padding:20px;margin-bottom:18px;box-shadow:0 8px 30px #0004}
 .card h2{text-align:center;color:var(--gold-light);font-size:1.2rem;margin-bottom:18px}
 .field{margin-bottom:15px}
 .field label{display:block;color:var(--gray);font-size:.85rem;margin-bottom:6px}
-.field input{
- width:100%;padding:12px;border-radius:10px;
- border:1px solid #674a91;background:#0b1026;
- color:white;font-size:1rem;outline:none;
-}
+.field input{width:100%;padding:12px;border-radius:10px;border:1px solid #674a91;background:#0b1026;color:white;font-size:1rem;outline:none}
 .field input:focus{border-color:var(--gold)}
-.btn{
- width:100%;padding:12px;border:0;border-radius:10px;
- font-size:1rem;font-weight:700;cursor:pointer;margin-top:5px;
-}
+.btn{width:100%;padding:12px;border:0;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:5px}
 .btn:disabled{opacity:.5;cursor:not-allowed}
 .primary{background:linear-gradient(135deg,var(--purple),var(--purple-light));color:white}
 .gold{background:linear-gradient(135deg,#b8902a,var(--gold),var(--gold-light));color:#1a1400}
 .danger{background:transparent;border:1px solid #ef4444;color:#f87171}
-.link{
- background:none;border:0;color:var(--gold-light);
- text-decoration:underline;cursor:pointer;padding:10px;
-}
+.small-btn{padding:7px 12px;border:1px solid #8062a0;border-radius:8px;background:#211638;color:white;cursor:pointer;font-family:inherit}
+.small-btn.gold-btn{background:#8b6921;border-color:var(--gold)}
+.small-btn.red-btn{border-color:#ef4444;color:#fca5a5}
+.link{background:none;border:0;color:var(--gold-light);text-decoration:underline;cursor:pointer;padding:10px}
 .tabs{display:flex;gap:8px;margin-bottom:18px}
-.tab{
- flex:1;padding:10px;border:0;border-radius:9px;
- background:#171b3d;color:#aaa;cursor:pointer;
-}
+.tab{flex:1;padding:10px;border:0;border-radius:9px;background:#171b3d;color:#aaa;cursor:pointer}
 .tab.active{background:var(--purple);color:white}
 .hidden{display:none!important}
-.alert{
- display:none;padding:12px;border-radius:10px;
- margin-bottom:14px;font-size:.87rem;line-height:1.8;
- overflow-wrap:anywhere;
-}
+.alert{display:none;padding:12px;border-radius:10px;margin-bottom:14px;font-size:.87rem;line-height:1.8;overflow-wrap:anywhere}
 .alert.show{display:block}
 .success{background:#123b2b;color:#86efac}
 .error{background:#451c28;color:#fca5a5}
 .info{background:#30204c;color:#e9d5ff}
-
-/* پروفایل گوشه صفحه */
-.topbar{
- display:flex;justify-content:flex-start;align-items:center;
- min-height:65px;margin-bottom:8px;
-}
-.profile-shortcut{
- display:flex;align-items:center;gap:10px;
- background:linear-gradient(135deg,#211638,#171b3d);
- border:1px solid var(--gold);border-radius:13px;
- padding:8px 13px;cursor:pointer;color:white;
- max-width:230px;box-shadow:0 0 15px #6b21a833;
-}
-.profile-shortcut:hover{border-color:var(--purple-light);transform:translateY(-1px)}
-.mini-avatar{
- width:42px;height:42px;flex-shrink:0;border-radius:50%;
- border:2px solid var(--gold);
- background:linear-gradient(135deg,var(--purple),var(--gold));
- background-size:cover;background-position:center;
- display:flex;align-items:center;justify-content:center;
- font-weight:800;font-size:1.1rem;
-}
-.mini-profile-text{text-align:right;min-width:0}
-.mini-name{
- color:var(--gold-light);font-weight:800;
- overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
- max-width:135px;
-}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;min-height:65px;margin-bottom:8px}
+.profile-shortcut{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#211638,#171b3d);border:1px solid var(--gold);border-radius:13px;padding:8px 13px;cursor:pointer;color:white;max-width:230px}
+.mini-avatar,.profile-avatar,.player-avatar{border-radius:50%;border:2px solid var(--gold);background:linear-gradient(135deg,var(--purple),var(--gold));background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
+.mini-avatar{width:42px;height:42px}
+.mini-name{color:var(--gold-light);font-weight:800;max-width:135px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mini-hint{font-size:.68rem;color:var(--gray)}
-
-/* صفحه اصلی */
-.magic-sections{
- display:grid;grid-template-columns:1fr;gap:13px;margin:25px 0 12px;
-}
-.magic-box{
- padding:20px;border:1px solid #674a91;border-radius:15px;
- background:linear-gradient(145deg,#20244b,#211638);
- text-align:center;box-shadow:0 5px 20px #0003;
-}
-.magic-box h3{color:var(--gold-light);font-size:1.05rem;margin-bottom:9px}
+.balance{padding:10px 15px;border:1px solid var(--gold);border-radius:12px;background:#211638;color:var(--gold-light);font-weight:900}
+.magic-sections{display:grid;grid-template-columns:1fr;gap:13px;margin:25px 0 12px}
+.magic-box{padding:20px;border:1px solid #674a91;border-radius:15px;background:linear-gradient(145deg,#20244b,#211638);text-align:center}
+.magic-box h3{color:var(--gold-light);margin-bottom:9px}
 .magic-box p{color:#d0c9e3;line-height:2;font-size:.92rem}
-.love{text-align:center;color:var(--gold-light);font-size:1.05rem;margin:20px 0 28px}
-
-/* جدول امتیازات */
-.score-card{
- background:linear-gradient(145deg,#1c193c,#151127);
- border:1px solid var(--gold);border-radius:18px;
- padding:20px;margin:20px 0;
- box-shadow:0 0 24px #6b21a822;
-}
-.score-title{
- text-align:center;color:var(--gold-light);
- font-size:1.35rem;font-weight:900;margin-bottom:7px;
-}
-.score-subtitle{text-align:center;color:var(--gray);font-size:.8rem;margin-bottom:20px}
-.score-first{
- border:1px solid #80612c;border-radius:13px;
- background:linear-gradient(120deg,#352548,#1d1939);
- padding:17px;text-align:center;margin-bottom:13px;
-}
-.trophy{font-size:2rem;margin-bottom:5px}
-.first-label{color:var(--gold-light);font-weight:800}
-.score-empty{color:var(--gray);font-size:.86rem;line-height:2;margin-top:7px}
+.love{text-align:center;color:var(--gold-light);margin:20px 0 28px}
+.section-title{text-align:center;color:var(--gold-light);font-weight:900;font-size:1.25rem;margin-bottom:8px}
+.section-sub{text-align:center;color:var(--gray);font-size:.82rem;margin-bottom:16px}
+.online-list{display:grid;gap:10px}
+.player-row{display:flex;align-items:center;gap:10px;padding:11px;background:#10132d;border:1px solid #40345d;border-radius:12px}
+.player-avatar{width:42px;height:42px}
+.player-info{flex:1;min-width:0}
+.player-name{font-weight:800;overflow-wrap:anywhere}
+.player-status{font-size:.75rem;color:#86efac}
+.empty-note{text-align:center;color:var(--gray);padding:16px;line-height:2}
+.score-card{background:linear-gradient(145deg,#1c193c,#151127);border:1px solid var(--gold);border-radius:18px;padding:20px;margin:20px 0}
 .score-table{width:100%;border-collapse:collapse;text-align:center;font-size:.86rem}
 .score-table th{color:var(--gold-light);padding:12px 5px;border-bottom:1px solid #594775}
 .score-table td{padding:12px 5px;border-bottom:1px solid #ffffff13;color:#e5def3}
 .score-table tr:last-child td{border-bottom:0}
-.score-note{text-align:center;color:#77758c;font-size:.72rem;margin-top:14px}
-
-/* پنجره پروفایل */
-.modal{
- position:fixed;inset:0;background:#05030dcc;
- z-index:20;display:flex;align-items:center;justify-content:center;
- padding:15px;overflow-y:auto;
-}
-.modal-content{
- width:100%;max-width:470px;max-height:90vh;overflow-y:auto;
- background:linear-gradient(145deg,#211638,#101027);
- border:1px solid var(--gold);border-radius:19px;
- padding:22px;box-shadow:0 0 40px #8b5cf644;
-}
-.modal-header{
- display:flex;justify-content:space-between;align-items:center;
- margin-bottom:20px;
-}
-.modal-header h2{color:var(--gold-light);font-size:1.2rem}
-.close-modal{
- border:1px solid #76518e;background:#211638;
- color:white;border-radius:9px;width:36px;height:36px;
- font-size:1.2rem;cursor:pointer;
-}
-.profile-preview{
- display:flex;align-items:center;gap:14px;
- padding:14px;background:#0d1028;border-radius:13px;margin-bottom:18px;
-}
-.profile-avatar{
- width:75px;height:75px;flex-shrink:0;border-radius:15px;
- border:2px solid var(--gold);
- background:linear-gradient(135deg,var(--purple),var(--gold));
- background-size:cover;background-position:center;
- display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:800;
-}
-.profile-preview-name{color:var(--gold-light);font-weight:800;overflow-wrap:anywhere}
-.profile-preview-email{font-size:.75rem;color:var(--gray);direction:ltr;text-align:right;overflow-wrap:anywhere}
-.photo-button{margin:0 0 18px}
+.modal{position:fixed;inset:0;background:#05030dcc;z-index:20;display:flex;align-items:center;justify-content:center;padding:15px;overflow-y:auto}
+.modal-content{width:100%;max-width:470px;max-height:90vh;overflow-y:auto;background:linear-gradient(145deg,#211638,#101027);border:1px solid var(--gold);border-radius:19px;padding:22px}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.modal-header h2{color:var(--gold-light)}
+.close-modal{border:1px solid #76518e;background:#211638;color:white;border-radius:9px;width:36px;height:36px;font-size:1.2rem;cursor:pointer}
+.profile-preview{display:flex;align-items:center;gap:14px;padding:14px;background:#0d1028;border-radius:13px;margin-bottom:18px}
+.profile-avatar{width:75px;height:75px;border-radius:15px;font-size:1.8rem}
+.profile-preview-name{color:var(--gold-light);font-weight:800}
+.profile-preview-email{font-size:.75rem;color:var(--gray);direction:ltr}
 .modal-divider{border:0;border-top:1px solid #594775;margin:20px 0}
-.modal-section-title{color:var(--gold-light);margin-bottom:13px;font-size:1rem}
+.modal-section-title{color:var(--gold-light);margin-bottom:13px}
 #photoInput{display:none}
-.modal-footer{margin-top:15px}
+.toast-area{position:fixed;top:14px;right:14px;z-index:100;width:min(350px,calc(100% - 28px));display:grid;gap:8px}
+.toast{padding:13px 16px;border-radius:11px;background:#211638;border:1px solid var(--gold);box-shadow:0 5px 25px #0008;line-height:1.7;animation:toastIn .2s ease}
+.toast.bad{border-color:#ef4444}
+.toast.good{border-color:#22c55e}
+@keyframes toastIn{from{opacity:0;transform:translateX(15px)}to{opacity:1;transform:translateX(0)}}
+.game-board{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:360px;margin:18px auto}
+.game-cell{aspect-ratio:1;border:1px solid #8062a0;border-radius:13px;background:#11132d;color:var(--gold-light);font-size:2.5rem;font-weight:900;cursor:pointer}
+.game-cell:disabled{cursor:default;opacity:.9}
+.game-status{text-align:center;color:var(--gold-light);line-height:2;margin:12px}
+.game-actions{display:flex;gap:8px;flex-wrap:wrap}
+.game-actions .btn{flex:1;min-width:120px}
+.invite-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:12px;background:#11132d;border-radius:10px;margin-bottom:8px}
+.invite-row .invite-name{flex:1;min-width:100px}
+.spinner{display:inline-block;width:15px;height:15px;border:2px solid #aaa;border-top-color:white;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 .footer-note{text-align:center;font-size:.75rem;color:#77758c;margin:25px 0;line-height:2}
 .footer-note a{color:var(--purple-light)}
-.spinner{
- display:inline-block;width:15px;height:15px;
- border:2px solid #aaa;border-top-color:white;
- border-radius:50%;animation:spin .7s linear infinite;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-@media(max-width:480px){
- .container{padding:13px}
- .logo{font-size:2rem}
- .profile-shortcut{padding:7px 10px}
- .magic-box{padding:16px}
- .modal-content{padding:17px}
-}
+@media(max-width:480px){.container{padding:13px}.logo{font-size:2rem}.modal-content{padding:17px}.game-cell{font-size:2rem}}
 </style>
 </head>
-
 <body>
+<div class="toast-area" id="toastArea"></div>
 <div class="container">
 
 <div id="topbar" class="topbar hidden">
  <button class="profile-shortcut" id="openProfileBtn" type="button">
   <div class="mini-avatar" id="miniAvatar">N</div>
-  <div class="mini-profile-text">
-   <div class="mini-name" id="miniName">پروفایل من</div>
-   <div class="mini-hint">⚙️ تنظیمات پروفایل</div>
-  </div>
+  <div><div class="mini-name" id="miniName">پروفایل من</div><div class="mini-hint">⚙️ تنظیمات پروفایل</div></div>
  </button>
+ <div class="balance">🍍 ناناس: <span id="myBalance">۰</span></div>
 </div>
 
 <h1 class="logo">🍍 ناناس کده</h1>
 <p class="subtitle">دنیای جادویی ناناس</p>
-
 <div id="globalAlert" class="alert"></div>
 
-<!-- ورود و ثبت نام -->
 <div id="authView">
  <div class="tabs" id="authTabs">
   <button class="tab active" data-tab="login">ورود</button>
   <button class="tab" data-tab="signup">ثبت‌نام</button>
  </div>
-
  <div class="card" id="loginCard">
-  <h2>✨ ورود به حساب</h2>
-  <div id="loginAlert" class="alert"></div>
+  <h2>✨ ورود به حساب</h2><div id="loginAlert" class="alert"></div>
   <form id="loginForm">
-   <div class="field">
-    <label>ایمیل</label>
-    <input type="email" id="loginEmail" required autocomplete="email">
-   </div>
-   <div class="field">
-    <label>رمز عبور</label>
-    <input type="password" id="loginPassword" required autocomplete="current-password">
-   </div>
+   <div class="field"><label>ایمیل</label><input type="email" id="loginEmail" required autocomplete="email"></div>
+   <div class="field"><label>رمز عبور</label><input type="password" id="loginPassword" required autocomplete="current-password"></div>
    <button class="btn primary" id="loginBtn">ورود</button>
   </form>
-  <div style="text-align:center">
-   <button class="link" id="showForgotBtn">رمز عبور را فراموش کرده‌اید؟</button>
-  </div>
+  <div style="text-align:center"><button class="link" id="showForgotBtn">رمز عبور را فراموش کرده‌اید؟</button></div>
  </div>
-
  <div class="card hidden" id="signupCard">
-  <h2>🌟 ساخت حساب جدید</h2>
-  <div id="signupAlert" class="alert"></div>
+  <h2>🌟 ساخت حساب جدید</h2><div id="signupAlert" class="alert"></div>
   <form id="signupForm">
-   <div class="field">
-    <label>نام نمایشی</label>
-    <input id="signupName" required minlength="2" autocomplete="nickname">
-   </div>
-   <div class="field">
-    <label>ایمیل</label>
-    <input type="email" id="signupEmail" required autocomplete="email">
-   </div>
-   <div class="field">
-    <label>رمز عبور (حداقل ۶ کاراکتر)</label>
-    <input type="password" id="signupPassword" required minlength="6" autocomplete="new-password">
-   </div>
-   <div class="field">
-    <label>تکرار رمز عبور</label>
-    <input type="password" id="signupPassword2" required minlength="6" autocomplete="new-password">
-   </div>
+   <div class="field"><label>نام نمایشی</label><input id="signupName" required minlength="2"></div>
+   <div class="field"><label>ایمیل</label><input type="email" id="signupEmail" required></div>
+   <div class="field"><label>رمز عبور (حداقل ۶ کاراکتر)</label><input type="password" id="signupPassword" required minlength="6"></div>
+   <div class="field"><label>تکرار رمز عبور</label><input type="password" id="signupPassword2" required minlength="6"></div>
    <button class="btn gold" id="signupBtn">ثبت‌نام</button>
   </form>
  </div>
-
  <div class="card hidden" id="forgotCard">
-  <h2>🔑 بازیابی رمز عبور</h2>
-  <div id="forgotAlert" class="alert"></div>
-  <form id="forgotForm">
-   <div class="field">
-    <label>ایمیل حساب</label>
-    <input type="email" id="forgotEmail" required>
-   </div>
-   <button class="btn primary" id="forgotBtn">ارسال لینک بازیابی</button>
-  </form>
-  <div style="text-align:center">
-   <button class="link" id="backToLoginBtn">بازگشت به ورود</button>
-  </div>
+  <h2>🔑 بازیابی رمز عبور</h2><div id="forgotAlert" class="alert"></div>
+  <form id="forgotForm"><div class="field"><label>ایمیل حساب</label><input type="email" id="forgotEmail" required></div><button class="btn primary" id="forgotBtn">ارسال لینک بازیابی</button></form>
+  <div style="text-align:center"><button class="link" id="backToLoginBtn">بازگشت به ورود</button></div>
  </div>
-
  <div class="card hidden" id="resetCard">
-  <h2>🪄 تعیین رمز جدید</h2>
-  <div id="resetAlert" class="alert"></div>
-  <form id="resetForm">
-   <div class="field">
-    <label>رمز جدید</label>
-    <input type="password" id="resetPassword" required minlength="6">
-   </div>
-   <div class="field">
-    <label>تکرار رمز جدید</label>
-    <input type="password" id="resetPassword2" required minlength="6">
-   </div>
-   <button class="btn gold" id="resetBtn">ذخیره رمز جدید</button>
-  </form>
+  <h2>🪄 تعیین رمز جدید</h2><div id="resetAlert" class="alert"></div>
+  <form id="resetForm"><div class="field"><label>رمز جدید</label><input type="password" id="resetPassword" required minlength="6"></div><div class="field"><label>تکرار رمز جدید</label><input type="password" id="resetPassword2" required minlength="6"></div><button class="btn gold" id="resetBtn">ذخیره رمز جدید</button></form>
  </div>
 </div>
 
-<!-- صفحه اصلی -->
 <div id="panelView" class="hidden">
-
  <div class="magic-sections">
-  <div class="magic-box">
-   <h3>✨ سرزمین ناناس</h3>
-   <p>دنیایی پر از خیال، شگفتی و رازهای پنهان.</p>
-  </div>
-  <div class="magic-box">
-   <h3>🌙 جادوی بی‌پایان</h3>
-   <p>هر گوشه این سرزمین داستانی تازه برای کشف دارد.</p>
-  </div>
-  <div class="magic-box">
-   <h3>🍍 ماجراجویی تازه</h3>
-   <p>داستان تو از همین لحظه آغاز می‌شود.</p>
-  </div>
+  <div class="magic-box"><h3>✨ سرزمین ناناس</h3><p>دنیایی پر از خیال، شگفتی و رازهای پنهان.</p></div>
+  <div class="magic-box"><h3>🌙 جادوی بی‌پایان</h3><p>هر گوشه این سرزمین داستانی تازه برای کشف دارد.</p></div>
+  <div class="magic-box"><h3>🍍 ماجراجویی تازه</h3><p>داستان تو از همین لحظه آغاز می‌شود.</p></div>
  </div>
-
  <div class="love">با عشق ❤️</div>
 
- <!-- جدول امتیازات -->
- <div class="score-card">
-  <div class="score-title">🏆 جدول امتیازات ناناس</div>
-  <div class="score-subtitle">برترین بازیکنان سرزمین ناناس</div>
-
-  <div class="score-first">
-   <div class="trophy">👑</div>
-   <div class="first-label">قهرمان سرزمین ناناس</div>
-   <div class="score-empty" id="firstPlayer">
-    هنوز امتیازی ثبت نشده است.<br>
-    با اضافه شدن بازی‌ها، نفر اول اینجا نمایش داده می‌شود.
-   </div>
-  </div>
-
-  <table class="score-table">
-   <thead>
-    <tr>
-     <th>رتبه</th>
-     <th>نام بازیکن</th>
-     <th>امتیاز</th>
-    </tr>
-   </thead>
-   <tbody id="scoreRows">
-    <tr>
-     <td colspan="3" style="text-align:center;color:#aaa">
-      جدول امتیازات پس از اضافه شدن بازی‌ها فعال می‌شود.
-     </td>
-    </tr>
-   </tbody>
-  </table>
-  <div class="score-note">✨ امتیازها در آینده از بازی‌های سایت دریافت خواهند شد.</div>
+ <div class="card">
+  <div class="section-title">🟢 بازیکنان آنلاین</div>
+  <div class="section-sub">برای شروع بازی، به یکی از بازیکنان دعوت بفرست</div>
+  <div id="onlineList" class="online-list"><div class="empty-note">در حال دریافت بازیکنان آنلاین...</div></div>
  </div>
 
+ <div class="card" id="incomingCard">
+  <div class="section-title">📨 دعوت‌های دریافتی</div>
+  <div id="incomingInvites"><div class="empty-note">دعوتی دریافت نشده است.</div></div>
+ </div>
+
+ <div class="card hidden" id="gameCard">
+  <div class="section-title">⭕ بازی دوز آنلاین ❌</div>
+  <div class="game-status" id="gameStatus">در حال بارگذاری بازی...</div>
+  <div class="game-board" id="gameBoard"></div>
+  <div class="game-actions">
+   <button class="btn primary" id="backGameBtn">بازگشت به صفحه اصلی</button>
+  </div>
+ </div>
+
+ <div class="score-card">
+  <div class="section-title">🏆 جدول امتیازات ناناس</div>
+  <div class="section-sub">رتبه‌بندی بر اساس تعداد ناناس‌ها</div>
+  <table class="score-table">
+   <thead><tr><th>رتبه</th><th>نام بازیکن</th><th>ناناس</th></tr></thead>
+   <tbody id="scoreRows"><tr><td colspan="3">در حال دریافت...</td></tr></tbody>
+  </table>
+ </div>
  <button class="btn danger" id="logoutBtn">🚪 خروج از حساب</button>
 </div>
 
-<!-- پنجره تنظیمات پروفایل -->
 <div id="profileModal" class="modal hidden">
  <div class="modal-content">
-  <div class="modal-header">
-   <h2>🪄 پروفایل من</h2>
-   <button class="close-modal" id="closeProfileBtn" type="button">×</button>
-  </div>
-
+  <div class="modal-header"><h2>🪄 پروفایل من</h2><button class="close-modal" id="closeProfileBtn">×</button></div>
   <div class="profile-preview">
    <div class="profile-avatar" id="avatarInitial">N</div>
-   <div>
-    <div class="profile-preview-name" id="panelName">—</div>
-    <div class="profile-preview-email" id="panelEmail">—</div>
-   </div>
+   <div><div class="profile-preview-name" id="panelName">—</div><div class="profile-preview-email" id="panelEmail">—</div></div>
   </div>
-
   <div id="profileAlert" class="alert"></div>
-
-  <button class="btn gold photo-button" id="choosePhotoBtn" type="button">
-   🖼️ انتخاب عکس از گالری
-  </button>
+  <button class="btn gold" id="choosePhotoBtn" type="button">🖼️ انتخاب عکس از گالری</button>
   <input type="file" id="photoInput" accept="image/*">
-
   <hr class="modal-divider">
-
   <h3 class="modal-section-title">✏️ تغییر نام نمایشی</h3>
-  <form id="profileForm">
-   <div class="field">
-    <label>نام جدید</label>
-    <input id="profileName" required minlength="2">
-   </div>
-   <button class="btn primary" id="profileBtn">ذخیره نام جدید</button>
-  </form>
-
+  <form id="profileForm"><div class="field"><label>نام جدید</label><input id="profileName" required minlength="2"></div><button class="btn primary" id="profileBtn">ذخیره نام جدید</button></form>
   <hr class="modal-divider">
-
-  <h3 class="modal-section-title">🔒 تغییر رمز عبور</h3>
-  <div id="changePassAlert" class="alert"></div>
-  <form id="changePassForm">
-   <div class="field">
-    <label>رمز عبور جدید</label>
-    <input type="password" id="newPass" minlength="6" required>
-   </div>
-   <div class="field">
-    <label>تکرار رمز جدید</label>
-    <input type="password" id="newPass2" minlength="6" required>
-   </div>
-   <button class="btn gold" id="changePassBtn">تغییر رمز عبور</button>
-  </form>
-
-  <div class="modal-footer">
-   <button class="btn danger" id="modalLogoutBtn">🚪 خروج از حساب</button>
-  </div>
+  <h3 class="modal-section-title">🔒 تغییر رمز عبور</h3><div id="changePassAlert" class="alert"></div>
+  <form id="changePassForm"><div class="field"><label>رمز عبور جدید</label><input type="password" id="newPass" minlength="6" required></div><div class="field"><label>تکرار رمز جدید</label><input type="password" id="newPass2" minlength="6" required></div><button class="btn gold" id="changePassBtn">تغییر رمز عبور</button></form>
+  <button class="btn danger" id="modalLogoutBtn">🚪 خروج از حساب</button>
  </div>
 </div>
 
-<p class="footer-note">
- ساخته‌شده با 💜 در <strong>ناناس کده</strong><br>
- احراز هویت توسط <a href="https://supabase.com" target="_blank" rel="noopener">Supabase</a>
-</p>
-
+<p class="footer-note">ساخته‌شده با 💜 در <strong>ناناس کده</strong><br>احراز هویت توسط <a href="https://supabase.com" target="_blank" rel="noopener">Supabase</a></p>
 </div>
 
 <script>
 (function(){
 'use strict';
-
 const SUPABASE_URL='https://hnmelfroqpmhfjwnrfmn.supabase.co';
 const SUPABASE_ANON_KEY='sb_publishable_Ia2VDkgSJGIDp09eeN8n4A_fOfV-Jfy';
 const BUCKET='player-avatars';
-const REDIRECT_URL=window.location.origin+window.location.pathname;
+const REDIRECT_URL=location.origin+location.pathname;
 const SESSION_DURATION=10*60*60*1000;
 const SESSION_KEY='nanaskade_login_time';
-
 const $=id=>document.getElementById(id);
 const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
-let currentUser=null;
-let isRecoveryMode=false;
+let currentUser=null,isRecoveryMode=false;
+let presenceChannel=null,inviteChannel=null,gameChannel=null;
+let activeGameId=null,activeGame=null,onlineUsers={};
+let profileCache={};
 
-function alertBox(el,type,msg){
- el.className='alert show '+type;
- el.textContent=msg;
-}
-function globalAlert(type,msg){alertBox($('globalAlert'),type,msg)}
+function alertBox(el,type,msg){el.className='alert show '+type;el.textContent=msg}
 function hideAlert(el){el.className='alert';el.textContent=''}
-
+function globalAlert(type,msg){alertBox($('globalAlert'),type,msg)}
+function toast(msg,type='good'){
+ const el=document.createElement('div');el.className='toast '+(type==='bad'?'bad':'good');el.textContent=msg;
+ $('toastArea').appendChild(el);setTimeout(()=>el.remove(),4500);
+}
 function busy(btn,on,label){
- if(on){
-  btn.dataset.old=btn.innerHTML;
-  btn.disabled=true;
-  btn.innerHTML=label+' <span class="spinner"></span>';
- }else{
-  btn.disabled=false;
-  if(btn.dataset.old)btn.innerHTML=btn.dataset.old;
- }
+ if(on){btn.dataset.old=btn.innerHTML;btn.disabled=true;btn.innerHTML=label+' <span class="spinner"></span>'}
+ else{btn.disabled=false;if(btn.dataset.old)btn.innerHTML=btn.dataset.old}
 }
-
-function validEmail(s){
- return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
-}
-function saveLoginTime(){
- localStorage.setItem(SESSION_KEY,String(Date.now()));
-}
-function clearLoginTime(){
- localStorage.removeItem(SESSION_KEY);
-}
-function expired(){
- const t=Number(localStorage.getItem(SESSION_KEY));
- return !t||!Number.isFinite(t)||Date.now()-t>=SESSION_DURATION;
-}
-function displayName(user){
- const n=user.user_metadata?.display_name;
- return (n&&String(n).trim())||(user.email?.split('@')[0])||'بازیکن';
-}
-
-function hideAuthCards(){
- ['loginCard','signupCard','forgotCard','resetCard'].forEach(id=>{
-  $(id).classList.add('hidden');
- });
-}
+function validEmail(s){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s)}
+function saveLoginTime(){localStorage.setItem(SESSION_KEY,String(Date.now()))}
+function clearLoginTime(){localStorage.removeItem(SESSION_KEY)}
+function expired(){const t=Number(localStorage.getItem(SESSION_KEY));return !t||!Number.isFinite(t)||Date.now()-t>=SESSION_DURATION}
+function displayName(user){return user?.user_metadata?.display_name?.trim()||user?.email?.split('@')[0]||'بازیکن'}
+function setAvatar(el,url,name){el.style.backgroundImage=url?'url("'+url.replace(/"/g,'%22')+'")':'';el.textContent=url?'':(name||'N').charAt(0).toUpperCase()}
+function showAuthCards(){['loginCard','signupCard','forgotCard','resetCard'].forEach(id=>$(id).classList.add('hidden'))}
 function showAuthTab(tab){
- hideAuthCards();
- $('authTabs').classList.remove('hidden');
- document.querySelectorAll('.tab').forEach(b=>{
-  b.classList.toggle('active',b.dataset.tab===tab);
- });
+ showAuthCards();$('authTabs').classList.remove('hidden');
+ document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
  $(tab==='login'?'loginCard':'signupCard').classList.remove('hidden');
 }
-function showForgot(){
- hideAuthCards();
- $('authTabs').classList.add('hidden');
- $('forgotCard').classList.remove('hidden');
-}
-function showReset(){
- isRecoveryMode=true;
- hideAuthCards();
- $('authTabs').classList.add('hidden');
- $('resetCard').classList.remove('hidden');
- alertBox($('resetAlert'),'info','رمز عبور جدید خود را وارد کنید.');
-}
-
+function showForgot(){showAuthCards();$('authTabs').classList.add('hidden');$('forgotCard').classList.remove('hidden')}
+function showReset(){isRecoveryMode=true;showAuthCards();$('authTabs').classList.add('hidden');$('resetCard').classList.remove('hidden');alertBox($('resetAlert'),'info','رمز عبور جدید خود را وارد کنید.')}
 function showPanel(){
- $('authView').classList.add('hidden');
- $('panelView').classList.remove('hidden');
- $('topbar').classList.remove('hidden');
- $('profileModal').classList.add('hidden');
+ $('authView').classList.add('hidden');$('panelView').classList.remove('hidden');$('topbar').classList.remove('hidden');$('profileModal').classList.add('hidden');
  window.scrollTo({top:0,behavior:'smooth'});
 }
 function showAuth(){
- $('panelView').classList.add('hidden');
- $('topbar').classList.add('hidden');
- $('profileModal').classList.add('hidden');
- $('authView').classList.remove('hidden');
+ $('panelView').classList.add('hidden');$('topbar').classList.add('hidden');$('profileModal').classList.add('hidden');$('authView').classList.remove('hidden');
  if(!isRecoveryMode)showAuthTab('login');
- window.scrollTo({top:0,behavior:'smooth'});
 }
+function openProfile(){if(currentUser)$('profileModal').classList.remove('hidden')}
+function closeProfile(){$('profileModal').classList.add('hidden')}
 
-function openProfile(){
- if(!currentUser)return;
- $('profileModal').classList.remove('hidden');
-}
-function closeProfile(){
- $('profileModal').classList.add('hidden');
-}
-
-/* عکس پروفایل */
-function setAvatar(el,url,name){
- el.style.backgroundImage=url?'url("'+url.replace(/"/g,'%22')+'")':'';
- el.textContent=url?'':(name||'N').charAt(0).toUpperCase();
-}
-
-/* همگام‌سازی پروفایل با جدول */
 async function syncProfile(user){
  const name=displayName(user);
- const {data:old,error:readError}=await client.from('profiles')
-  .select('avatar_url').eq('id',user.id).maybeSingle();
+ const {data:old,error:readError}=await client.from('profiles').select('avatar_url').eq('id',user.id).maybeSingle();
  if(readError)throw readError;
-
- const {error}=await client.from('profiles').upsert({
-  id:user.id,
-  display_name:name,
-  avatar_url:old?.avatar_url||null,
-  updated_at:new Date().toISOString()
- },{onConflict:'id'});
+ const {error}=await client.from('profiles').upsert({id:user.id,display_name:name,avatar_url:old?.avatar_url||null,updated_at:new Date().toISOString()},{onConflict:'id'});
  if(error)throw error;
 }
-
-/* نمایش اطلاعات کاربر */
 async function renderUser(user){
  if(!user||isRecoveryMode)return;
-
- currentUser=user;
- const name=displayName(user);
-
- $('panelName').textContent=name;
- $('panelEmail').textContent=user.email||'';
- $('profileName').value=name;
- $('miniName').textContent=name;
-
- setAvatar($('avatarInitial'),null,name);
- setAvatar($('miniAvatar'),null,name);
-
- showPanel();
-
+ currentUser=user;const name=displayName(user);
+ $('panelName').textContent=name;$('panelEmail').textContent=user.email||'';$('profileName').value=name;$('miniName').textContent=name;
+ setAvatar($('avatarInitial'),null,name);setAvatar($('miniAvatar'),null,name);showPanel();
  try{
   await syncProfile(user);
-
-  const {data,error}=await client.from('profiles')
-   .select('avatar_url,display_name')
-   .eq('id',user.id).maybeSingle();
-
+  const {data,error}=await client.from('profiles').select('avatar_url,display_name').eq('id',user.id).maybeSingle();
   if(error)throw error;
-
   const finalName=data?.display_name||name;
-  $('panelName').textContent=finalName;
-  $('profileName').value=finalName;
-  $('miniName').textContent=finalName;
-
-  setAvatar($('avatarInitial'),data?.avatar_url,finalName);
-  setAvatar($('miniAvatar'),data?.avatar_url,finalName);
-
- }catch(err){
-  console.error(err);
-  globalAlert('error','پروفایل باز شد، اما دریافت اطلاعات آن از سرور با خطا روبه‌رو شد: '+err.message);
- }
+  $('panelName').textContent=finalName;$('profileName').value=finalName;$('miniName').textContent=finalName;
+  setAvatar($('avatarInitial'),data?.avatar_url,finalName);setAvatar($('miniAvatar'),data?.avatar_url,finalName);
+  profileCache[user.id]={display_name:finalName,avatar_url:data?.avatar_url||null};
+ }catch(err){console.error(err);globalAlert('error','دریافت پروفایل با خطا روبه‌رو شد: '+err.message)}
+ await startOnlineFeatures();
+ await refreshBalance();
+ await loadLeaderboard();
+ await loadIncomingInvites();
+ if(activeGameId)await openGame(activeGameId);
 }
 
-/* فشرده‌سازی عکس */
+/* عکس */
 function compressImage(file){
  return new Promise((resolve,reject)=>{
-  const reader=new FileReader();
-
-  reader.onerror=()=>reject(new Error('خواندن عکس ناموفق بود.'));
-
-  reader.onload=()=>{
-   const img=new Image();
-
-   img.onerror=()=>reject(new Error('فایل عکس معتبر نیست.'));
-
-   img.onload=()=>{
-    const max=500;
-    const scale=Math.min(1,max/Math.max(img.width,img.height));
-
-    const canvas=document.createElement('canvas');
-    canvas.width=Math.round(img.width*scale);
-    canvas.height=Math.round(img.height*scale);
-
+  const reader=new FileReader();reader.onerror=()=>reject(new Error('خواندن عکس ناموفق بود.'));
+  reader.onload=()=>{const img=new Image();img.onerror=()=>reject(new Error('فایل عکس معتبر نیست.'));
+   img.onload=()=>{const max=500,scale=Math.min(1,max/Math.max(img.width,img.height)),canvas=document.createElement('canvas');
+    canvas.width=Math.round(img.width*scale);canvas.height=Math.round(img.height*scale);
     canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
-
-    canvas.toBlob(blob=>{
-     if(blob)resolve(blob);
-     else reject(new Error('تبدیل عکس انجام نشد.'));
-    },'image/jpeg',.8);
-   };
-
-   img.src=reader.result;
-  };
-
-  reader.readAsDataURL(file);
- });
+    canvas.toBlob(blob=>blob?resolve(blob):reject(new Error('تبدیل عکس انجام نشد.')),'image/jpeg',.8)};
+   img.src=reader.result};reader.readAsDataURL(file)
+ })
 }
-
-/* باز کردن پنجره پروفایل */
 $('openProfileBtn').addEventListener('click',openProfile);
 $('closeProfileBtn').addEventListener('click',closeProfile);
-
-$('profileModal').addEventListener('click',e=>{
- if(e.target===$('profileModal'))closeProfile();
-});
-
-document.addEventListener('keydown',e=>{
- if(e.key==='Escape')closeProfile();
-});
-
-/* انتخاب و ذخیره عکس */
-$('choosePhotoBtn').addEventListener('click',()=>{
- if(currentUser)$('photoInput').click();
-});
-
+$('profileModal').addEventListener('click',e=>{if(e.target===$('profileModal'))closeProfile()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeProfile()});
+$('choosePhotoBtn').addEventListener('click',()=>{if(currentUser)$('photoInput').click()});
 $('photoInput').addEventListener('change',async function(){
- const file=this.files?.[0];
- if(!file)return;
-
- if(!file.type.startsWith('image/')){
-  globalAlert('error','لطفاً یک فایل تصویری انتخاب کنید.');
-  this.value='';
-  return;
- }
- if(file.size>8*1024*1024){
-  globalAlert('error','حجم عکس نباید بیشتر از ۸ مگابایت باشد.');
-  this.value='';
-  return;
- }
-
- const btn=$('choosePhotoBtn');
- busy(btn,true,'در حال آپلود عکس...');
-
+ const file=this.files?.[0];if(!file)return;
+ if(!file.type.startsWith('image/')){toast('لطفاً یک فایل تصویری انتخاب کن.','bad');this.value='';return}
+ if(file.size>8*1024*1024){toast('حجم عکس نباید بیشتر از ۸ مگابایت باشد.','bad');this.value='';return}
+ const btn=$('choosePhotoBtn');busy(btn,true,'در حال آپلود...');
  try{
-  const blob=await compressImage(file);
-  const path=currentUser.id+'/'+Date.now()+'.jpg';
-
-  const {error:uploadError}=await client.storage.from(BUCKET).upload(path,blob,{
-   contentType:'image/jpeg',
-   cacheControl:'3600',
-   upsert:false
-  });
-
-  if(uploadError)throw uploadError;
-
+  const blob=await compressImage(file),path=currentUser.id+'/'+Date.now()+'.jpg';
+  const {error:upErr}=await client.storage.from(BUCKET).upload(path,blob,{contentType:'image/jpeg',cacheControl:'3600',upsert:false});
+  if(upErr)throw upErr;
   const {data:urlData}=client.storage.from(BUCKET).getPublicUrl(path);
   const photoUrl=urlData.publicUrl;
-
-  const {error:updateError}=await client.from('profiles').update({
-   avatar_url:photoUrl,
-   updated_at:new Date().toISOString()
-  }).eq('id',currentUser.id);
-
-  if(updateError)throw updateError;
-
-  const name=displayName(currentUser);
-  setAvatar($('avatarInitial'),photoUrl,name);
-  setAvatar($('miniAvatar'),photoUrl,name);
-
+  const {error}=await client.from('profiles').update({avatar_url:photoUrl,updated_at:new Date().toISOString()}).eq('id',currentUser.id);
+  if(error)throw error;
+  const name=displayName(currentUser);setAvatar($('avatarInitial'),photoUrl,name);setAvatar($('miniAvatar'),photoUrl,name);
+  profileCache[currentUser.id]={display_name:name,avatar_url:photoUrl};
   alertBox($('profileAlert'),'success','عکس پروفایل با موفقیت ذخیره شد! 🎉');
-
- }catch(err){
-  alertBox($('profileAlert'),'error','ذخیره عکس انجام نشد: '+err.message);
- }finally{
-  busy(btn,false);
-  this.value='';
- }
+ }catch(err){alertBox($('profileAlert'),'error','ذخیره عکس انجام نشد: '+err.message)}
+ finally{busy(btn,false);this.value=''}
 });
 
-/* تب‌های ورود و ثبت‌نام */
-document.querySelectorAll('.tab').forEach(b=>{
- b.addEventListener('click',()=>{
-  showAuthTab(b.dataset.tab);
-  hideAlert($('loginAlert'));
-  hideAlert($('signupAlert'));
- });
-});
-
+/* ورود و ثبت‌نام */
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{showAuthTab(b.dataset.tab);hideAlert($('loginAlert'));hideAlert($('signupAlert'))}));
 $('showForgotBtn').addEventListener('click',showForgot);
 $('backToLoginBtn').addEventListener('click',()=>showAuthTab('login'));
 
-/* ثبت‌نام */
 $('signupForm').addEventListener('submit',async e=>{
- e.preventDefault();
-
- const alertEl=$('signupAlert');
- hideAlert(alertEl);
-
- const name=$('signupName').value.trim();
- const email=$('signupEmail').value.trim();
- const pass=$('signupPassword').value;
- const pass2=$('signupPassword2').value;
-
+ e.preventDefault();const alertEl=$('signupAlert');hideAlert(alertEl);
+ const name=$('signupName').value.trim(),email=$('signupEmail').value.trim(),pass=$('signupPassword').value,pass2=$('signupPassword2').value;
  if(name.length<2)return alertBox(alertEl,'error','نام نمایشی باید حداقل ۲ کاراکتر باشد.');
  if(!validEmail(email))return alertBox(alertEl,'error','ایمیل معتبر نیست.');
  if(pass.length<6)return alertBox(alertEl,'error','رمز عبور باید حداقل ۶ کاراکتر باشد.');
  if(pass!==pass2)return alertBox(alertEl,'error','رمزها یکسان نیستند.');
-
- const btn=$('signupBtn');
- busy(btn,true,'در حال ثبت‌نام...');
-
+ const btn=$('signupBtn');busy(btn,true,'در حال ثبت‌نام...');
  try{
-  const {data,error}=await client.auth.signUp({
-   email,password:pass,
-   options:{
-    data:{display_name:name},
-    emailRedirectTo:REDIRECT_URL
-   }
-  });
-
-  if(error)throw error;
-  $('signupForm').reset();
-
-  if(data.user?.identities?.length===0){
-   alertBox(alertEl,'error','این ایمیل قبلاً ثبت شده است.');
-  }else if(data.session){
-   saveLoginTime();
-   await renderUser(data.user);
-   globalAlert('success','ثبت‌نام موفق بود! خوش آمدید.');
-  }else{
-   alertBox(alertEl,'success','حساب ساخته شد. ایمیل خود را تأیید کنید و سپس وارد شوید.');
-  }
-
- }catch(err){
-  alertBox(alertEl,'error','خطا: '+err.message);
- }finally{
-  busy(btn,false);
- }
+  const {data,error}=await client.auth.signUp({email,password:pass,options:{data:{display_name:name},emailRedirectTo:REDIRECT_URL}});
+  if(error)throw error;$('signupForm').reset();
+  if(data.user?.identities?.length===0)alertBox(alertEl,'error','این ایمیل قبلاً ثبت شده است.');
+  else if(data.session){saveLoginTime();await renderUser(data.user);globalAlert('success','ثبت‌نام موفق بود! خوش آمدید.')}
+  else alertBox(alertEl,'success','حساب ساخته شد. ایمیل خود را تأیید کن و سپس وارد شو.');
+ }catch(err){alertBox(alertEl,'error','خطا: '+err.message)}finally{busy(btn,false)}
 });
-
-/* ورود */
 $('loginForm').addEventListener('submit',async e=>{
- e.preventDefault();
-
- const alertEl=$('loginAlert');
- hideAlert(alertEl);
-
- const email=$('loginEmail').value.trim();
- const password=$('loginPassword').value;
-
+ e.preventDefault();const alertEl=$('loginAlert');hideAlert(alertEl);
+ const email=$('loginEmail').value.trim(),password=$('loginPassword').value;
  if(!validEmail(email))return alertBox(alertEl,'error','ایمیل معتبر نیست.');
-
- const btn=$('loginBtn');
- busy(btn,true,'در حال ورود...');
-
+ const btn=$('loginBtn');busy(btn,true,'در حال ورود...');
  try{
-  const {data,error}=await client.auth.signInWithPassword({email,password});
-  if(error)throw error;
-
-  saveLoginTime();
-  $('loginForm').reset();
-  await renderUser(data.user);
-
-  globalAlert('success','ورود موفق بود! به ناناس کده خوش آمدید.');
-
- }catch(err){
-  let msg=err.message;
-  if(/invalid login credentials|invalid credentials/i.test(msg))msg='ایمیل یا رمز عبور اشتباه است.';
-  if(/email not confirmed/i.test(msg))msg='ایمیل شما هنوز تأیید نشده است.';
-  alertBox(alertEl,'error','خطا: '+msg);
- }finally{
-  busy(btn,false);
- }
+  const {data,error}=await client.auth.signInWithPassword({email,password});if(error)throw error;
+  saveLoginTime();$('loginForm').reset();await renderUser(data.user);globalAlert('success','ورود موفق بود! به ناناس کده خوش آمدید.');
+ }catch(err){let msg=err.message;if(/invalid login credentials|invalid credentials/i.test(msg))msg='ایمیل یا رمز عبور اشتباه است.';if(/email not confirmed/i.test(msg))msg='ایمیل شما هنوز تأیید نشده است.';alertBox(alertEl,'error','خطا: '+msg)}
+ finally{busy(btn,false)}
 });
-
-/* فراموشی رمز */
 $('forgotForm').addEventListener('submit',async e=>{
- e.preventDefault();
-
- const alertEl=$('forgotAlert');
- hideAlert(alertEl);
-
- const email=$('forgotEmail').value.trim();
+ e.preventDefault();const alertEl=$('forgotAlert');hideAlert(alertEl);const email=$('forgotEmail').value.trim();
  if(!validEmail(email))return alertBox(alertEl,'error','ایمیل معتبر نیست.');
-
- const btn=$('forgotBtn');
- busy(btn,true,'در حال ارسال...');
-
- try{
-  const {error}=await client.auth.resetPasswordForEmail(email,{
-   redirectTo:REDIRECT_URL
-  });
-
-  if(error)throw error;
-
-  alertBox(alertEl,'success','لینک بازیابی به ایمیل شما ارسال شد.');
-  $('forgotForm').reset();
-
- }catch(err){
-  alertBox(alertEl,'error',err.message);
- }finally{
-  busy(btn,false);
- }
+ const btn=$('forgotBtn');busy(btn,true,'در حال ارسال...');
+ try{const {error}=await client.auth.resetPasswordForEmail(email,{redirectTo:REDIRECT_URL});if(error)throw error;alertBox(alertEl,'success','لینک بازیابی به ایمیل شما ارسال شد.');$('forgotForm').reset()}
+ catch(err){alertBox(alertEl,'error',err.message)}finally{busy(btn,false)}
 });
-
-/* تعیین رمز از لینک بازیابی */
 $('resetForm').addEventListener('submit',async e=>{
- e.preventDefault();
-
- const alertEl=$('resetAlert');
- const p1=$('resetPassword').value;
- const p2=$('resetPassword2').value;
-
+ e.preventDefault();const alertEl=$('resetAlert'),p1=$('resetPassword').value,p2=$('resetPassword2').value;
  if(p1.length<6)return alertBox(alertEl,'error','رمز باید حداقل ۶ کاراکتر باشد.');
  if(p1!==p2)return alertBox(alertEl,'error','رمزها یکسان نیستند.');
-
- const btn=$('resetBtn');
- busy(btn,true,'در حال ذخیره...');
-
+ const btn=$('resetBtn');busy(btn,true,'در حال ذخیره...');
  try{
-  const {error}=await client.auth.updateUser({password:p1});
-  if(error)throw error;
-
-  alertBox(alertEl,'success','رمز با موفقیت تغییر کرد. اکنون وارد شوید.');
-
-  isRecoveryMode=false;
-  clearLoginTime();
-
-  await client.auth.signOut();
-  history.replaceState({},document.title,REDIRECT_URL);
-  $('resetForm').reset();
-  showAuthTab('login');
-
- }catch(err){
-  alertBox(alertEl,'error',err.message);
- }finally{
-  busy(btn,false);
- }
+  const {error}=await client.auth.updateUser({password:p1});if(error)throw error;
+  alertBox(alertEl,'success','رمز با موفقیت تغییر کرد. اکنون وارد شوید.');isRecoveryMode=false;clearLoginTime();
+  await client.auth.signOut();history.replaceState({},document.title,REDIRECT_URL);$('resetForm').reset();showAuthTab('login');
+ }catch(err){alertBox(alertEl,'error',err.message)}finally{busy(btn,false)}
 });
 
-/* تغییر نام */
+/* تغییر نام و رمز */
 $('profileForm').addEventListener('submit',async e=>{
- e.preventDefault();
-
- const alertEl=$('profileAlert');
- hideAlert(alertEl);
-
- const name=$('profileName').value.trim();
+ e.preventDefault();const alertEl=$('profileAlert');hideAlert(alertEl);const name=$('profileName').value.trim();
  if(name.length<2)return alertBox(alertEl,'error','نام باید حداقل ۲ کاراکتر باشد.');
-
- const btn=$('profileBtn');
- busy(btn,true,'در حال ذخیره...');
-
+ const btn=$('profileBtn');busy(btn,true,'در حال ذخیره...');
  try{
-  const {data,error}=await client.auth.updateUser({
-   data:{display_name:name}
-  });
-
-  if(error)throw error;
-  currentUser=data.user;
-
-  const {data:oldProfile,error:readError}=await client.from('profiles')
-   .select('avatar_url').eq('id',currentUser.id).maybeSingle();
-
-  if(readError)throw readError;
-
-  const {error:dbError}=await client.from('profiles').upsert({
-   id:currentUser.id,
-   display_name:name,
-   avatar_url:oldProfile?.avatar_url||null,
-   updated_at:new Date().toISOString()
-  },{onConflict:'id'});
-
-  if(dbError)throw dbError;
-
-  $('panelName').textContent=name;
-  $('miniName').textContent=name;
-
-  setAvatar($('avatarInitial'),oldProfile?.avatar_url,name);
-  setAvatar($('miniAvatar'),oldProfile?.avatar_url,name);
-
-  alertBox(alertEl,'success','نام نمایشی با موفقیت ذخیره شد.');
-
- }catch(err){
-  alertBox(alertEl,'error','خطا: '+err.message);
- }finally{
-  busy(btn,false);
- }
+  const {data,error}=await client.auth.updateUser({data:{display_name:name}});if(error)throw error;currentUser=data.user;
+  const {data:old,error:readError}=await client.from('profiles').select('avatar_url').eq('id',currentUser.id).maybeSingle();if(readError)throw readError;
+  const {error:dbErr}=await client.from('profiles').upsert({id:currentUser.id,display_name:name,avatar_url:old?.avatar_url||null,updated_at:new Date().toISOString()},{onConflict:'id'});if(dbErr)throw dbErr;
+  $('panelName').textContent=name;$('miniName').textContent=name;setAvatar($('avatarInitial'),old?.avatar_url,name);setAvatar($('miniAvatar'),old?.avatar_url,name);
+  profileCache[currentUser.id]={display_name:name,avatar_url:old?.avatar_url||null};
+  await updatePresence();alertBox(alertEl,'success','نام نمایشی با موفقیت ذخیره شد.');await loadLeaderboard();
+ }catch(err){alertBox(alertEl,'error','خطا: '+err.message)}finally{busy(btn,false)}
 });
-
-/* تغییر رمز از پنجره پروفایل */
 $('changePassForm').addEventListener('submit',async e=>{
- e.preventDefault();
-
- const alertEl=$('changePassAlert');
- hideAlert(alertEl);
-
- const p1=$('newPass').value;
- const p2=$('newPass2').value;
-
+ e.preventDefault();const alertEl=$('changePassAlert');hideAlert(alertEl);const p1=$('newPass').value,p2=$('newPass2').value;
  if(p1.length<6)return alertBox(alertEl,'error','رمز باید حداقل ۶ کاراکتر باشد.');
  if(p1!==p2)return alertBox(alertEl,'error','رمزها یکسان نیستند.');
+ const btn=$('changePassBtn');busy(btn,true,'در حال تغییر...');
+ try{const {error}=await client.auth.updateUser({password:p1});if(error)throw error;$('changePassForm').reset();alertBox(alertEl,'success','رمز عبور با موفقیت تغییر کرد.')}
+ catch(err){alertBox(alertEl,'error',err.message)}finally{busy(btn,false)}
+});
 
- const btn=$('changePassBtn');
- busy(btn,true,'در حال تغییر...');
+/* ناناس و جدول امتیازات */
+async function refreshBalance(){
+ if(!currentUser)return;
+ const {data,error}=await client.from('player_nanas').select('nanas').eq('user_id',currentUser.id).maybeSingle();
+ if(error){console.error(error);return}
+ $('myBalance').textContent=Number(data?.nanas??0).toLocaleString('fa-IR');
+}
+async function loadLeaderboard(){
+ const {data:balances,error}=await client.from('player_nanas').select('user_id,nanas').order('nanas',{ascending:false}).limit(20);
+ if(error){console.error(error);$('scoreRows').innerHTML='<tr><td colspan="3">دریافت جدول ناموفق بود.</td></tr>';return}
+ if(!balances?.length){$('scoreRows').innerHTML='<tr><td colspan="3">هنوز امتیازی ثبت نشده است.</td></tr>';return}
+ const ids=balances.map(x=>x.user_id);
+ const {data:profiles}=await client.from('profiles').select('id,display_name').in('id',ids);
+ const names={};(profiles||[]).forEach(p=>names[p.id]=p.display_name);
+ $('scoreRows').innerHTML=balances.map((b,i)=>'<tr><td>'+((i+1).toLocaleString('fa-IR'))+'</td><td>'+escapeHtml(names[b.user_id]||'بازیکن')+'</td><td>🍍 '+Number(b.nanas).toLocaleString('fa-IR')+'</td></tr>').join('');
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 
+/* حضور آنلاین با Realtime Presence */
+async function startOnlineFeatures(){
+ if(!currentUser)return;
+ stopOnlineFeatures();
+ const {data:profile}=await client.from('profiles').select('display_name,avatar_url').eq('id',currentUser.id).maybeSingle();
+ const myProfile={user_id:currentUser.id,display_name:profile?.display_name||displayName(currentUser),avatar_url:profile?.avatar_url||null};
+ presenceChannel=client.channel('nanas-online-room',{config:{presence:{key:currentUser.id}}});
+ presenceChannel.on('presence',{event:'sync'},()=>renderOnlineList());
+ presenceChannel.on('presence',{event:'join'},()=>renderOnlineList());
+ presenceChannel.on('presence',{event:'leave'},()=>renderOnlineList());
+ presenceChannel.subscribe(async status=>{
+  if(status==='SUBSCRIBED'){
+   await presenceChannel.track(myProfile);
+  }
+ });
+ inviteChannel=client.channel('nanas-invites-'+currentUser.id)
+  .on('postgres_changes',{event:'*',schema:'public',table:'game_invites',filter:'recipient_id=eq.'+currentUser.id},()=>loadIncomingInvites())
+  .on('postgres_changes',{event:'UPDATE',schema:'public',table:'game_invites',filter:'sender_id=eq.'+currentUser.id},payload=>handleSentInviteUpdate(payload.new))
+  .subscribe();
+}
+async function updatePresence(){
+ if(!presenceChannel||!currentUser)return;
+ const p=profileCache[currentUser.id]||{};
+ await presenceChannel.track({user_id:currentUser.id,display_name:p.display_name||displayName(currentUser),avatar_url:p.avatar_url||null});
+}
+function stopOnlineFeatures(){
+ if(presenceChannel){client.removeChannel(presenceChannel);presenceChannel=null}
+ if(inviteChannel){client.removeChannel(inviteChannel);inviteChannel=null}
+ if(gameChannel){client.removeChannel(gameChannel);gameChannel=null}
+ onlineUsers={};
+}
+function renderOnlineList(){
+ if(!presenceChannel)return;
+ const state=presenceChannel.presenceState(),found={};
+ Object.values(state).forEach(entries=>{
+  (entries||[]).forEach(entry=>{
+   if(entry.user_id&&entry.user_id!==currentUser.id)found[entry.user_id]=entry;
+  });
+ });
+ onlineUsers=found;
+ const ids=Object.keys(found);
+ if(!ids.length){$('onlineList').innerHTML='<div class="empty-note">فعلاً بازیکن دیگری آنلاین نیست. وقتی کسی وارد شود اینجا نمایش داده می‌شود.</div>';return}
+ $('onlineList').innerHTML=ids.map(id=>{
+  const p=found[id],name=escapeHtml(p.display_name||'بازیکن');
+  const avatar=p.avatar_url?'<div class="player-avatar" style="background-image:url(&quot;'+escapeHtml(p.avatar_url)+'&quot;)"></div>':'<div class="player-avatar">'+name.charAt(0)+'</div>';
+  return '<div class="player-row">'+avatar+'<div class="player-info"><div class="player-name">'+name+'</div><div class="player-status">● آنلاین</div></div><button class="small-btn gold-btn" data-invite="'+id+'">دعوت به بازی</button></div>';
+ }).join('');
+}
+$('onlineList').addEventListener('click',e=>{
+ const btn=e.target.closest('[data-invite]');if(btn)sendInvite(btn.dataset.invite,btn);
+});
+
+/* ارسال دعوت */
+async function sendInvite(targetId,btn){
+ if(!currentUser||!targetId)return;
+ if(btn)btn.disabled=true;
  try{
-  const {error}=await client.auth.updateUser({password:p1});
+  const {data,error}=await client.rpc('send_game_invite',{target_player:targetId});
   if(error)throw error;
-
-  $('changePassForm').reset();
-  alertBox(alertEl,'success','رمز عبور با موفقیت تغییر کرد.');
-
+  await refreshBalance();
+  toast('دعوت بازی ارسال شد؛ ۱ ناناس از موجودی تو کم شد.','good');
+  if(data)toast('منتظر پاسخ بازیکن بمان.','good');
  }catch(err){
-  alertBox(alertEl,'error',err.message);
- }finally{
-  busy(btn,false);
+  const msg=err.message||'ارسال دعوت ناموفق بود.';
+  if(/ناناس|nanas|balance|insufficient/i.test(msg))toast('برای فرستادن دعوت باید حداقل ۲ ناناس داشته باشی.','bad');
+  else toast(msg,'bad');
+ }finally{if(btn)btn.disabled=false}
+}
+
+/* دعوت‌های دریافتی */
+async function loadIncomingInvites(){
+ if(!currentUser)return;
+ const {data,error}=await client.from('game_invites').select('id,sender_id,created_at').eq('recipient_id',currentUser.id).eq('status','pending').order('created_at',{ascending:false});
+ if(error){console.error(error);return}
+ if(!data?.length){$('incomingInvites').innerHTML='<div class="empty-note">دعوتی دریافت نشده است.</div>';return}
+ const ids=[...new Set(data.map(x=>x.sender_id))];
+ const [{data:profiles},{data:balances}]=await Promise.all([
+  client.from('profiles').select('id,display_name').in('id',ids),
+  client.from('player_nanas').select('user_id,nanas').in('user_id',ids)
+ ]);
+ const names={},money={};(profiles||[]).forEach(p=>names[p.id]=p.display_name);(balances||[]).forEach(b=>money[b.user_id]=b.nanas);
+ $('incomingInvites').innerHTML=data.map(inv=>
+  '<div class="invite-row"><div class="invite-name"><strong>'+escapeHtml(names[inv.sender_id]||'بازیکن')+'</strong><div style="font-size:.75rem;color:#aaa">موجودی: '+Number(money[inv.sender_id]||0).toLocaleString('fa-IR')+' ناناس</div></div><button class="small-btn gold-btn" data-accept="'+inv.id+'">قبول</button><button class="small-btn red-btn" data-reject="'+inv.id+'">رد</button></div>'
+ ).join('');
+}
+$('incomingInvites').addEventListener('click',async e=>{
+ const accept=e.target.closest('[data-accept]'),reject=e.target.closest('[data-reject]');
+ if(accept)await respondInvite(accept.dataset.accept,true,accept);
+ if(reject)await respondInvite(reject.dataset.reject,false,reject);
+});
+async function respondInvite(inviteId,accept,btn){
+ btn.disabled=true;
+ try{
+  const {data,error}=await client.rpc('respond_game_invite',{p_invite_id:inviteId,p_accept:accept});
+  if(error)throw error;
+  await loadIncomingInvites();await refreshBalance();
+  if(!accept){toast('دعوت رد شد. ناناس فرستنده بازگردانده شد.','good');return}
+  if(data?.status==='insufficient'){
+   toast('بازیکن مقابل ناناس نداره؛ ناناس تو به فرستنده بازگردانده شد.','bad');return;
+  }
+  if(data?.status==='accepted'&&data?.game_id){
+   toast('دعوت پذیرفته شد؛ ۱ ناناس از موجودی تو کم شد.','good');
+   await openGame(data.game_id);
+  }else toast('پاسخ دعوت ثبت شد.','good');
+ }catch(err){toast('انجام عملیات ناموفق بود: '+err.message,'bad')}
+ finally{btn.disabled=false}
+}
+async function handleSentInviteUpdate(invite){
+ if(!invite||invite.sender_id!==currentUser?.id)return;
+ if(invite.status==='rejected'){
+  await refreshBalance();toast('دعوت رد شد؛ ناناس پرداختی به حسابت برگشت.','good');
  }
+ if(invite.status==='accepted'&&invite.game_id){
+  await refreshBalance();toast('دعوت پذیرفته شد؛ بازی شروع شد!','good');await openGame(invite.game_id);
+ }
+}
+
+/* بازی دوز */
+async function openGame(gameId){
+ if(!currentUser||!gameId)return;
+ activeGameId=gameId;$('gameCard').classList.remove('hidden');
+ $('gameCard').scrollIntoView({behavior:'smooth',block:'start'});
+ if(gameChannel){client.removeChannel(gameChannel);gameChannel=null}
+ const {data,error}=await client.from('tic_tac_toe_games').select('*').eq('id',gameId).maybeSingle();
+ if(error||!data){toast('بازی پیدا نشد یا دسترسی به آن ممکن نیست.','bad');return}
+ activeGame=data;renderGame();
+ gameChannel=client.channel('nanas-game-'+gameId)
+  .on('postgres_changes',{event:'UPDATE',schema:'public',table:'tic_tac_toe_games',filter:'id=eq.'+gameId},payload=>{
+   activeGame=payload.new;renderGame();
+  }).subscribe();
+}
+function renderGame(){
+ const g=activeGame;if(!g)return;
+ const isPlayerX=g.player_x===currentUser.id,isPlayerO=g.player_o===currentUser.id;
+ if(!isPlayerX&&!isPlayerO){$('gameStatus').textContent='شما بازیکن این بازی نیستید.';return}
+ const myMark=isPlayerX?'X':'O';
+ let status='';
+ if(g.status==='finished')status=g.winner===currentUser.id?'🎉 تو برنده شدی! یک ناناس جایزه گرفتی.':'این بازی را باختی. موفق باشی!';
+ else if(g.status==='draw')status='🤝 بازی مساوی شد!';
+ else status=g.current_turn===currentUser.id?'نوبت توست؛ حرکت کن.':'نوبت حریف است؛ منتظر بمان.';
+ $('gameStatus').textContent='تو '+myMark+' هستی. '+status;
+ const board=Array.isArray(g.board)?g.board:Array(9).fill('');
+ $('gameBoard').innerHTML=board.map((cell,i)=>
+  '<button class="game-cell" data-cell="'+i+'" '+(cell||g.status!=='playing'||g.current_turn!==currentUser.id?'disabled':'')+'>'+escapeHtml(cell||'')+'</button>'
+ ).join('');
+ if(g.status==='finished'&&g.winner===currentUser.id){refreshBalance();loadLeaderboard()}
+}
+$('gameBoard').addEventListener('click',async e=>{
+ const cell=e.target.closest('[data-cell]');if(!cell||!activeGame)return;
+ const index=Number(cell.dataset.cell);cell.disabled=true;
+ try{
+  const {error}=await client.rpc('make_tic_tac_toe_move',{game_id:activeGame.id,cell_index:index});
+  if(error)throw error;
+ }catch(err){toast(err.message||'ثبت حرکت ناموفق بود.','bad');await openGame(activeGame.id)}
+});
+$('backGameBtn').addEventListener('click',()=>{
+ $('gameCard').classList.add('hidden');
+ if(gameChannel){client.removeChannel(gameChannel);gameChannel=null}
+ activeGameId=null;activeGame=null;
 });
 
 /* خروج */
 async function logout(){
- const btn=$('logoutBtn');
- const modalBtn=$('modalLogoutBtn');
-
- btn.disabled=true;
- modalBtn.disabled=true;
- btn.textContent='در حال خروج...';
- modalBtn.textContent='در حال خروج...';
-
+ $('logoutBtn').disabled=true;$('modalLogoutBtn').disabled=true;
  try{
-  const {error}=await client.auth.signOut();
-  if(error)throw error;
-
-  clearLoginTime();
-  currentUser=null;
-  showAuth();
+  stopOnlineFeatures();
+  const {error}=await client.auth.signOut();if(error)throw error;
+  clearLoginTime();currentUser=null;activeGameId=null;activeGame=null;showAuth();
   alertBox($('loginAlert'),'success','با موفقیت خارج شدید.');
-
- }catch(err){
-  globalAlert('error','خروج انجام نشد: '+err.message);
- }finally{
-  btn.disabled=false;
-  modalBtn.disabled=false;
-  btn.textContent='🚪 خروج از حساب';
-  modalBtn.textContent='🚪 خروج از حساب';
- }
+ }catch(err){globalAlert('error','خروج انجام نشد: '+err.message)}
+ finally{$('logoutBtn').disabled=false;$('modalLogoutBtn').disabled=false}
 }
-
 $('logoutBtn').addEventListener('click',logout);
 $('modalLogoutBtn').addEventListener('click',logout);
 
-/* بررسی لینک بازیابی */
-function recoveryInUrl(){
- const params=new URLSearchParams(location.search);
- return params.get('type')==='recovery'||location.hash.includes('type=recovery');
-}
-
-/* راه‌اندازی سایت */
+function recoveryInUrl(){const p=new URLSearchParams(location.search);return p.get('type')==='recovery'||location.hash.includes('type=recovery')}
 async function init(){
- if(recoveryInUrl()){
-  showReset();
-  return;
- }
-
+ if(recoveryInUrl()){showReset();return}
  try{
-  const {data,error}=await client.auth.getSession();
-  if(error)throw error;
-
+  const {data,error}=await client.auth.getSession();if(error)throw error;
   const user=data.session?.user;
-
   if(user){
-   if(expired()){
-    clearLoginTime();
-    await client.auth.signOut();
-    showAuth();
-    alertBox($('loginAlert'),'info','زمان ورود ۱۰ ساعته شما تمام شده است. دوباره وارد شوید.');
-    return;
-   }
-
+   if(expired()){clearLoginTime();await client.auth.signOut();showAuth();alertBox($('loginAlert'),'info','زمان ورود ۱۰ ساعته شما تمام شده است. دوباره وارد شوید.');return}
    await renderUser(user);
-  }else{
-   clearLoginTime();
-   showAuth();
-  }
-
- }catch(err){
-  console.error(err);
-  showAuth();
- }
+  }else{clearLoginTime();showAuth()}
+ }catch(err){console.error(err);showAuth()}
 }
-
 client.auth.onAuthStateChange((event,session)=>{
- if(event==='PASSWORD_RECOVERY'){
-  showReset();
-  return;
- }
-
- if(event==='SIGNED_OUT'&&!isRecoveryMode){
-  clearLoginTime();
-  currentUser=null;
-  showAuth();
- }
+ if(event==='PASSWORD_RECOVERY'){showReset();return}
+ if(event==='SIGNED_OUT'&&!isRecoveryMode){stopOnlineFeatures();clearLoginTime();currentUser=null;showAuth()}
 });
-
-if(document.readyState==='loading'){
- document.addEventListener('DOMContentLoaded',init);
-}else{
- init();
-}
-
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
 </script>
 </body>
